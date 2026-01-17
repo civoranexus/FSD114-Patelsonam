@@ -1,14 +1,16 @@
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("Welcome to EduVillage – Learning for Every Village")
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
 
 def home(request):
     return render(request, 'core/home.html')
-
 def about(request):
     return render(request, 'core/about.html')
-# Home page view
-def home(request):
-    return render(request, 'core/home.html')
+
+
+class UserLoginView(LoginView):
+    template_name = 'core/login.html'
+
+@login_required
+def dashboard(request):
+    return render(request, 'core/dashboard.html')

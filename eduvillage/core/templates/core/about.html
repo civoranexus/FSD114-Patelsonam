@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>About EduVillage</title>
-</head>
-<body>
-    <h1>About EduVillage</h1>
-    <p>EduVillage is a Django-based internship management platform.</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}About - EduVillage{% endblock %}
+
+{% block content %}
+<h1>About EduVillage</h1>
+<p>This platform is built using Django to help students track internships, submit projects, and manage credits.</p>
+{% endblock %}
