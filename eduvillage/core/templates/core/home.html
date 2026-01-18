@@ -1,24 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>EduVillage</title>
+    <title>EduVillage Home</title>
 </head>
 <body>
-
     <h1>Welcome to EduVillage</h1>
-
-    <!-- Navigation Link -->
-    <a href="/about/">About Us</a>
-
-    <p>This platform is built using Django.</p>
-
-    <ul>
-        <li>Internship Tracking</li>
-        <li>Project Submissions</li>
-        <li>Credit System</li>
-    </ul>
-
-    <p><b>Day 4:</b> Homepage, templates, routing, and navigation completed.</p>
-
+    <p>
+        <a href="{% url 'login' %}">Login</a> | 
+        <a href="{% url 'about' %}">About</a> |
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+    </p>
 </body>
 </html>
