@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
 <div class="container">
-    <h2>Login</h2>
+    <h2>Create Account</h2>
 
     {% if messages %}
         {% for message in messages %}
@@ -19,11 +19,12 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
+        <button type="submit">Sign Up</button>
     </form>
+
     <p style="text-align:center; margin-top:10px;">
-        Don't have an account?
-        <a href="{% url 'signup' %}">Sign Up</a>
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
     </p>
 </div>
 
