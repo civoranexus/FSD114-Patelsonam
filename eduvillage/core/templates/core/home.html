@@ -3,6 +3,14 @@
 <head>
     <title>EduVillage Home</title>
 </head>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
 <body>
     <h1>Welcome to EduVillage</h1>
     <p>

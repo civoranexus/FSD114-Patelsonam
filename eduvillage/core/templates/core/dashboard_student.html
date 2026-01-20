@@ -1,0 +1,10 @@
+<h2>Student Dashboard</h2>
+
+<p>Welcome {{ request.user.username }}</p>
+
+<a href="{% url 'profile' %}">My Profile</a>
+
+<form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
