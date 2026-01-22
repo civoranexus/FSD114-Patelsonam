@@ -1,0 +1,27 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<h2>Contact Us</h2>
+
+<p>If you have any questions or need support, feel free to contact us.</p>
+
+<ul>
+    <li><strong>Email:</strong> eduvillage@gmail.com</li>
+    <li><strong>Phone:</strong> +91 98765 43210</li>
+    <li><strong>Location:</strong> India</li>
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <label>Name:</label><br>
+    <input type="text" name="name"><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email"><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message"></textarea><br><br>
+
+    <button type="submit">Send</button>
+</form>
+{% endblock %}

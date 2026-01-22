@@ -1,18 +1,42 @@
-{% extends 'core/base.html' %}
-{% block content %}
+<div class="container mt-4">
 
-<div class="container">
-    <h2>Welcome, {{ request.user.username }}</h2>
+  <h2 class="text-center mb-4">
+    Welcome, {{ request.user.username }} 👋
+  </h2>
 
-    <div style="margin-top:20px;">
-        <p>📘 My Courses</p>
-        <p>👤 My Profile</p>
-        <p>📊 Learning Progress</p>
+  <div class="row text-center">
+
+    <div class="col-md-4 mb-3">
+      <div class="card shadow p-4 h-100">
+        <h5>📘 Courses</h5>
+        <p class="text-muted">Explore available courses</p>
+      </div>
     </div>
 
-    <a href="{% url 'profile' %}">
-        <button>Go to Profile</button>
-    </a>
-</div>
+    <div class="col-md-4 mb-3">
+      <div class="card shadow p-4 h-100">
+        <h5>🧑‍🎓 Students</h5>
+        <p class="text-muted">Manage student records</p>
+      </div>
+    </div>
 
-{% endblock %}
+    <div class="col-md-4 mb-3">
+      <div class="card shadow p-4 h-100">
+        <h5>👩‍🏫 Teachers</h5>
+        <p class="text-muted">View teacher profiles</p>
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="my-4">
+
+  <ul class="list-group mb-3">
+    <li class="list-group-item">📘 My Courses</li>
+    <li class="list-group-item">👤 My Profile</li>
+    <li class="list-group-item">📊 Learning Progress</li>
+  </ul>
+
+  <a href="#" class="btn btn-primary w-100">Go to Profile</a>
+
+</div>

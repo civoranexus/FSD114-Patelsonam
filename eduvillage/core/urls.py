@@ -22,6 +22,10 @@ urlpatterns = [
     ),
     name='password_change'
 ),
+   path('register/', views.register, name='register'),
+   path('courses/', views.courses, name='courses'),
+   path('contact/', views.contact, name='contact'),
+ 
 
 
 

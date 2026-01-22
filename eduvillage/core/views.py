@@ -76,3 +76,11 @@ def profile(request):
 def my_courses(request):
     enrollments = Enrollment.objects.filter(user=request.user)
     return render(request, 'core/my_courses.html', {'enrollments': enrollments})
+
+def register(request):
+    return render(request, 'core/register.html')
+def courses(request):
+    return render(request, 'core/courses.html')
+
+def contact(request):
+    return render(request, 'core/contact.html')
