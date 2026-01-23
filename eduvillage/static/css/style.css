@@ -88,4 +88,186 @@ footer a:hover {
 footer {
     font-size: 14px;
 }
+.auth-body {
+    background: radial-gradient(circle at top, #2b2e4a, #000);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.auth-container {
+    background: #111;
+    padding: 30px;
+    width: 340px;
+    border-radius: 14px;
+    box-shadow: 0 0 30px rgba(128, 90, 213, 0.5);
+    color: white;
+}
+
+.auth-container h2 {
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.auth-container input,
+.auth-container select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: none;
+}
+
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(90deg, #6a5acd, #00bcd4);
+    border: none;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.switch-link {
+    text-align: center;
+    margin-top: 12px;
+}
+/* Reset and base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Full page background */
+.auth-body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+}
+
+/* Container card */
+.auth-container {
+    background-color: white;
+    padding: 40px 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 380px;
+    text-align: center;
+    animation: fadeIn 1s ease;
+}
+
+/* Headings */
+.auth-container h2 {
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.auth-container .subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Alerts */
+.alert {
+    background-color: #ffdddd;
+    color: #a94442;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+/* Form styling */
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-container label {
+    text-align: left;
+    font-size: 14px;
+    color: #555;
+}
+
+.auth-container select,
+.auth-container input {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.auth-container select:focus,
+.auth-container input:focus {
+    border-color: #4e54c8;
+}
+
+/* Submit button */
+.btn-primary {
+    background-color: #4e54c8;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #3b3fc1;
+}
+
+/* Signup link */
+.switch-link {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+}
+
+.switch-link a {
+    color: #4e54c8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+/* ===== Responsive ===== */
+@media (max-width: 420px) {
+    .auth-container {
+        width: 90%;
+        padding: 30px 20px;
+    }
+
+    .auth-container .logo {
+        width: 60px;
+        margin-bottom: 15px;
+    }
+}
 

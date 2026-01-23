@@ -32,10 +32,29 @@ def home(request):
 def about(request):
     return render(request, 'core/about.html')
 
-# Dashboard page (login required)
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import UserProfile
+
 @login_required
 def dashboard(request):
-    return render(request, 'core/dashboard.html')
+    # Get or create profile (safety)
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    # Role-based dashboard rendering
+    if profile.role == 'student':
+        template_name = 'core/dashboard_student.html'
+    elif profile.role == 'instructor':
+        template_name = 'core/dashboard_instructor.html'
+    else:
+        template_name = 'core/dashboard_admin.html'
+
+    context = {
+        'profile': profile,
+        'user': request.user
+    }
+
+    return render(request, template_name, context)
 
 
 

@@ -1,0 +1,56 @@
+body {
+    background: radial-gradient(circle at top, #1f1f2e, #000);
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-container {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #111;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(100, 100, 255, 0.4);
+    text-align: center;
+}
+
+.dashboard-container h2 {
+    margin-bottom: 10px;
+}
+
+.dashboard-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.dashboard-links a {
+    text-decoration: none;
+    padding: 12px;
+    background: linear-gradient(90deg, #6a5acd, #00bcd4);
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+}
+
+.dashboard-links a:hover {
+    opacity: 0.9;
+}
+
+.logout-btn {
+    background: crimson;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Admin Highlight */
+.dashboard-container.admin {
+    border: 2px solid gold;
+}

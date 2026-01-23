@@ -10,11 +10,18 @@ class Village(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    bio = models.TextField(blank=True)
+     ROLE_CHOICES = (
+        ('student', 'Student'),
+        ('instructor', 'Instructor'),
+        ('admin', 'Admin'),
+    )
+     user = models.OneToOneField(User, on_delete=models.CASCADE)
+     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='student')
+     profile_image = models.ImageField(upload_to='profiles/', default='profiles/default.png')
+     avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+     bio = models.TextField(blank=True)
 
-    def __str__(self):
+     def __str__(self):
         return self.user.username
 
 
