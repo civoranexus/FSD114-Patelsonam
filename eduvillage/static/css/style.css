@@ -342,5 +342,46 @@ footer {
 .profile-card button:hover {
     background-color: #45a049;
 }
+.edit-profile-container {
+  max-width: 700px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.edit-form .form-group {
+  margin-bottom: 15px;
+}
+
+.edit-form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-save {
+  background: #2c7be5;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+}
+
+.btn-cancel {
+  background: #ccc;
+  padding: 10px 20px;
+}
 
 

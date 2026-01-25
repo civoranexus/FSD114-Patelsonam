@@ -3,25 +3,36 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.forms import UserChangeForm
-from django.shortcuts import render, redirect
-from .forms import EditProfileForm
-from .models import Enrollment
-from .forms import ProfileForm
-from .models import UserProfile
-
+from .forms import UserForm, EditProfileForm
+from .models import UserProfile, Enrollment
 @login_required
 def edit_profile(request):
+    user = request.user
+    profile, created = UserProfile.objects.get_or_create(user=user)
+
     if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
+        user_form = UserForm(request.POST, instance=user)
+        profile_form = EditProfileForm(
+            request.POST,
+            request.FILES,
+            instance=profile
+        )
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
             messages.success(request, "Profile updated successfully!")
             return redirect('profile')
     else:
-        form = UserChangeForm(instance=request.user)
+        user_form = UserForm(instance=user)
+        profile_form = EditProfileForm(instance=profile)
 
-    return render(request, 'core/edit_profile.html', {'form': form})
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+
+    return render(request, 'core/edit_profile.html', context)
 
 
 # Home page
@@ -85,7 +96,6 @@ class UserLogoutView(LogoutView):
     next_page = 'home'
 from django.contrib.auth.decorators import login_required
 
-from .forms import ProfileForm
 
 @login_required
 def profile(request):

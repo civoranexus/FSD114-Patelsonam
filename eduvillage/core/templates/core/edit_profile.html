@@ -1,25 +1,27 @@
 {% extends 'core/base.html' %}
-{% block content %}
+{% load static %}
 
-<div class="container">
+{% block content %}
+<div class="edit-profile-container">
+
     <h2>Edit Profile</h2>
 
-    {% if messages %}
-        {% for message in messages %}
-            <div class="alert">{{ message }}</div>
-        {% endfor %}
-    {% endif %}
-
-    <form method="post">
+    <form method="POST" enctype="multipart/form-data" class="edit-profile-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Changes</button>
-    </form>
-    <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
-</div>
 
+        <fieldset>
+            <legend>Account Information</legend>
+            {{ user_form.as_p }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Profile Details</legend>
+            {{ profile_form.as_p }}
+        </fieldset>
+
+        <button type="submit" class="btn-save">Save Changes</button>
+        <a href="{% url 'profile' %}" class="btn-cancel">Cancel</a>
+    </form>
+
+</div>
 {% endblock %}
