@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from .forms import UserForm, EditProfileForm
 from .models import UserProfile, Enrollment
+from django.shortcuts import redirect, get_object_or_404
+from .models import Course, Enrollment
 @login_required
 def edit_profile(request):
     user = request.user
@@ -113,3 +115,11 @@ def courses(request):
 
 def contact(request):
     return render(request, 'core/contact.html')
+@login_required
+def enroll_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    Enrollment.objects.get_or_create(
+        user=request.user,
+        course=course
+    )
+    return redirect('my_courses')

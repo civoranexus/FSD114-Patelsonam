@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block content %}
 <div class="container mt-4">
 
   <h2 class="text-center mb-4">
@@ -8,11 +9,14 @@
   <div class="row text-center">
 
     <div class="col-md-4 mb-3">
-      <div class="card shadow p-4 h-100">
-        <h5>📘 Courses</h5>
-        <p class="text-muted">Explore available courses</p>
-      </div>
+  <a href="{% url 'courses' %}" class="text-decoration-none text-dark">
+    <div class="card shadow p-4 h-100 course-click">
+      <h5>📘 Courses</h5>
+      <p class="text-muted">Explore available courses</p>
     </div>
+  </a>
+</div>
+
 
     <div class="col-md-4 mb-3">
       <div class="card shadow p-4 h-100">
@@ -32,12 +36,19 @@
 
   <hr class="my-4">
 
-  <ul class="list-group mb-3">
-    <li class="list-group-item">📘 My Courses</li>
-    <li class="list-group-item">👤 My Profile</li>
+    <ul class="list-group mb-3">
+    <li class="list-group-item">
+      📘 <a href="{% url 'courses' %}">My Courses</a>
+    </li>
+    <li class="list-group-item">
+      👤 <a href="{% url 'profile' %}">My Profile</a>
+    </li>
     <li class="list-group-item">📊 Learning Progress</li>
   </ul>
 
-  <a href="#" class="btn btn-primary w-100">Go to Profile</a>
+  <a href="{% url 'profile' %}" class="btn btn-primary w-100">
+    Go to Profile
+  </a>
 
 </div>
+{% endblock %}
