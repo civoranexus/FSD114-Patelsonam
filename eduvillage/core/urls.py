@@ -30,7 +30,7 @@ urlpatterns = [
    path('contact/', views.contact, name='contact'),
    path('my-profile/', views.profile, name='my_profile'),
    path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
-
+   path('student/dashboard/', views.dashboard_student, name='dashboard_student'),  
 
 
 ]

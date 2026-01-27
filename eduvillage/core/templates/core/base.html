@@ -43,6 +43,7 @@
             {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                
             {% endif %}
         </ul>
     </div>
@@ -53,24 +54,14 @@
     <div class="row">
 
         <!-- Sidebar -->
-        {% if user.is_authenticated %}
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar pt-4 vh-100">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'my_profile' %}">My Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/courses/">Courses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/settings/">Settings</a>
-                </li>
-            </ul>
-        </nav>
-        {% endif %}
+      {% if user.is_authenticated %}
+<div class="sidebar">
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <a href="{% url 'profile' %}">My Profile</a>
+    <a href="{% url 'courses' %}">Courses</a>
+    <a href="#">Settings</a>
+</div>
+{% endif %}
 
         <!-- Main Content -->
         <main class="{% if user.is_authenticated %}col-md-10 ms-sm-auto col-lg-10 px-md-4{% else %}col-12{% endif %} py-4">
@@ -79,6 +70,10 @@
 
     </div>
 </div>
+
+
+
+
 
 <!-- Footer -->
 <footer class="bg-dark text-white mt-5 p-3 text-center">

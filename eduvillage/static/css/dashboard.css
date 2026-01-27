@@ -1,4 +1,56 @@
 body {
+    background-color: #f8fafa !important;
+    color: #333 !important;
+}
+
+
+.dashboard-container {
+    max-width: 600px;
+    margin: 80px auto;
+    padding: 30px;
+    background: #111;
+    border-radius: 16px;
+    box-shadow: 0 0 40px rgba(100, 100, 255, 0.4);
+    text-align: center;
+}body {
+    margin: 0;
+    font-family: Arial;
+    background: #f4f6f8;
+}
+
+.navbar {
+    background: #1e293b;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logout-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+}
+
+.content {
+    padding: 20px;
+}
+
+.cards {
+    display: flex;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+body {
     background: radial-gradient(circle at top, #1f1f2e, #000);
     font-family: 'Segoe UI', sans-serif;
     color: white;
@@ -54,3 +106,4 @@ body {
 .dashboard-container.admin {
     border: 2px solid gold;
 }
+

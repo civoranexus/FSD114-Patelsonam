@@ -7,6 +7,8 @@ from .forms import UserForm, EditProfileForm
 from .models import UserProfile, Enrollment
 from django.shortcuts import redirect, get_object_or_404
 from .models import Course, Enrollment
+from .forms import RegisterForm
+
 @login_required
 def edit_profile(request):
     user = request.user
@@ -109,7 +111,16 @@ def my_courses(request):
     return render(request, 'core/my_courses.html', {'enrollments': enrollments})
 
 def register(request):
-    return render(request, 'core/register.html')
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully. Please login.')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'core/register.html', {'form': form})
 def courses(request):
     return render(request, 'core/courses.html')
 
@@ -123,3 +134,18 @@ def enroll_course(request, course_id):
         course=course
     )
     return redirect('my_courses')
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegisterForm()
+
+    return render(request, 'core/register.html', {'form': form})
+
+@login_required
+def dashboard_student(request):
+    return render(request, 'core/dashboard_student.html')

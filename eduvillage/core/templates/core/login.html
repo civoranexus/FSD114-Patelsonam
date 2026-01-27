@@ -18,13 +18,6 @@
         <h2>Welcome Back</h2>
         <p class="subtitle">Login to continue your learning journey</p>
 
-        <!-- Display messages -->
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-
         <!-- Login form -->
         <form method="post">
             {% csrf_token %}
@@ -33,7 +26,8 @@
             <label>Select Role</label>
             <select name="role" required>
                 <option value="student">🎓 Student</option>
-                <option value="instructor">👨‍🏫 Instructor</option>
+                <option value="instructor">👨‍🏫 teacher
+                </option>
                 <option value="admin">🛠 Admin</option>
             </select>
 
@@ -48,6 +42,7 @@
         <p class="switch-link">
             Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a>
         </p>
+        
     </div>
 
 </body>
