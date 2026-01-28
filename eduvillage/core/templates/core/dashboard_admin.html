@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body>
+
+<div class="dashboard-container admin">
+    <h2>🛠 Admin Dashboard</h2>
+
+    <p>Welcome <strong>{{ request.user.username }}</strong></p>
+
+    <div class="dashboard-links">
+        <a href="#">Manage Users</a>
+        <a href="#">Manage Courses</a>
+        <a href="#">Reports</a>
+        <a href="#">Settings</a>
+    </div>
+
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="logout-btn" type="submit">Logout</button>
+    </form>
+</div>
+
+</body>
+</html>

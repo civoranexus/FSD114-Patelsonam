@@ -1,0 +1,170 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="courses-container">
+
+    <h1 class="page-title">Our Courses</h1>
+    <p class="page-subtitle">
+        Explore industry-relevant courses designed to boost your skills and career.
+    </p>
+
+   <div class="row">
+
+    <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>Python Programming</h5>
+        <p class="text-muted">
+          Learn Python fundamentals, OOP, and real-world applications.
+        </p>
+          <ul>
+                <li>Duration: 3 Months</li>
+                <li>Level: Beginner</li>
+                <li>Hands-on Practice</li>
+            </ul>
+       <a href="{% url 'enroll_course' 1 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+
+       <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>Full Stack Development</h5>
+        <p class="text-muted">
+          Build modern web applications using Django and frontend tools.
+        </p>
+        <ul>
+                <li>Duration: 6 Months</li>
+                <li>Level: Beginner to Advanced </li>
+                <li>Capstone Project Included</li>
+            </ul>
+        <a href="{% url 'enroll_course' 2 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+
+        <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>AI & Machine Learning</h5>
+        <p class="text-muted">
+          Understand AI concepts and implement ML models.
+        </p>
+         <ul>
+                <li>Duration: 5  Months</li>
+                <li>Level: Intermediate</li>
+                <li>Mini Projects Included</li>
+            </ul>
+        <a href="{% url 'enroll_course' 3 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+ 
+       <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>Data Science</h5>
+        <p class="text-muted">
+          Learn data analysis, visualization, statistics, and Python libraries like NumPy and Pandas.
+        </p>
+        <ul class="list-unstyled small mb-3">
+  <li>⏱ Duration: 4 Months</li>
+  <li>🎯 Level: Intermediate</li>
+  <li>🛠 Case Studies & Projects</li>
+</ul>
+
+       <a href="{% url 'enroll_course' 4 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+
+        <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>Web Development</h5>
+        <p class="text-muted">
+          Build responsive websites using HTML, CSS, JavaScript, and backend integration.
+        </p>
+        <ul class="list-unstyled small mb-3">
+  <li>⏱ Duration: 3 Months</li>
+  <li>🎯 Level: Beginner</li>
+  <li>🛠 Live Website Projects</li>
+</ul>
+
+        <a href="{% url 'enroll_course' 5 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+     <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>Cyber Security</h5>
+        <p class="text-muted">
+          Understand cyber threats, network security, ethical hacking, and security best practices.
+        </p>
+        <ul class="list-unstyled small mb-3">
+  <li>⏱ Duration: 4 Months</li>
+  <li>🎯 Level: Intermediate</li>
+  <li>🛠 Practical Labs Included</li>
+</ul>
+
+        <a href="{% url 'enroll_course' 6 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+      <div class="card shadow h-100 p-3">
+        <h5>Cloud Computing</h5>
+        <p class="text-muted">
+          Learn cloud fundamentals, deployment models, and services using AWS and Azure.
+        </p> <ul class="list-unstyled small mb-3">
+  <li>⏱ Duration: 3 Months</li>
+  <li>🎯 Level: Beginner to Intermediate</li>
+  <li>🛠 Deployment Projects</li>
+</ul>
+
+        <a href="{% url 'enroll_course' 7 %}"
+   class="btn btn-primary w-100">
+   Enroll Now
+</a>
+      </div>
+    </div>
+    </div>   <!-- ✅ closes row -->
+</div>   <!-- ✅ closes courses-container -->
+
+
+<!-- Enroll Confirmation Modal -->
+<div class="modal fade" id="enrollModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Course Enrollment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p>✅ You have successfully enrolled in this course.</p>
+        <p class="text-muted small">
+          Start learning from your dashboard.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">
+          Go to Dashboard
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

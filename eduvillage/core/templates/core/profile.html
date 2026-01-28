@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="profile-card">
+
+    <h2>My Profile</h2>
+{% if request.user.userprofile.avatar %}
+    <img src="{{ request.user.userprofile.avatar.url }}" width="120">
+{% else %}
+    <img src="{% static 'images/default_avatar.png' %}" width="120">
+{% endif %}
+
+
+    <p><strong>Username:</strong> {{ request.user.username }}</p>
+    <p><strong>Email:</strong> {{ request.user.email }}</p>
+    <p><strong>First Name:</strong> {{ request.user.first_name }}</p>
+    <p><strong>Last Name:</strong> {{ request.user.last_name }}</p>
+
+    <br>
+
+    <a href="{% url 'edit_profile' %}">
+        <button>Edit Profile</button>
+    </a>
+
+    <a href="{% url 'password_change' %}">
+        <button>Change Password</button>
+    </a>
+
+</div>
+
+{% endblock %}

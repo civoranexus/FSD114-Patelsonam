@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block content %}
+
+<div class="assignments-container">
+    <h2>{{ title }}</h2>
+    <p>This is a temporary assignments page.</p>
+
+    <div class="assignments-list">
+        {% for assignment in assignments %}
+        <div class="assignment-card">
+            <h3>{{ assignment.title }}</h3>
+            <p>Due Date: {{ assignment.due_date }}</p>
+        </div>
+        {% empty %}
+        <p>No assignments found.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
