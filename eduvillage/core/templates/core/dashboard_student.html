@@ -1,67 +1,130 @@
-{% extends 'core/base.html' %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduVillage | Student Dashboard</title>
 
-{% block content %}
-
-<div class="dashboard-wrapper">
-
-    <!-- Welcome -->
-    <div class="dashboard-header">
-        <h2>Welcome, {{ user.username }} 👋</h2>
-        <p class="subtitle">Track your learning progress and manage your courses</p>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <h5>📚 Enrolled Courses</h5>
-            <h2>4</h2>
-        </div>
-
-        <div class="stat-card">
-            <h5>📈 Overall Progress</h5>
-            <h2>65%</h2>
-            <div class="progress">
-                <div class="progress-bar" style="width:65%"></div>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>EduVillage</h2>
             </div>
-        </div>
+            <nav class="menu">
+                <h4>Main Menu</h4>
+                <ul>
+                    <li class="active">Dashboard</li>
+                    <li>My Courses</li>
+                    <li>Assignments <span class="badge">3</span></li>
+                    <li>Grades</li>
+                    <li>Attendance</li>
+                    <li>Face Recognition</li>
+                </ul>
+                <h4>Learning Tools</h4>
+                <ul>
+                    <li>AI Tutor</li>
+                </ul>
+            </nav>
+        </aside>
 
-        <div class="stat-card">
-            <h5>⏰ Upcoming Tasks</h5>
-            <p>No pending assignments</p>
-        </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header / Breadcrumb -->
+            <div class="header">
+                <div class="breadcrumb">
+                    <span>🏠 Home /</span> <span>Dashboard</span>
+                </div>
+                <div class="welcome">
+                    <h1>Welcome Back, student 👋</h1>
+                    <p id="current-date"></p>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards">
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <div class="info">
+                        <h2>6</h2>
+                        <p>Enrolled Courses</p>
+                        <span class="update">↑ 2 new this semester</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="info">
+                        <h2>94.2%</h2>
+                        <p>Attendance Rate</p>
+                        <span class="update">↑ 3.2% improvement</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🏆</div>
+                    <div class="info">
+                        <h2>0.0</h2>
+                        <p>Current GPA</p>
+                        <span class="update">↑ 0.3 from last sem</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📝</div>
+                    <div class="info">
+                        <h2>3</h2>
+                        <p>Pending Tasks</p>
+                        <span class="update alert">⚠ 1 due tomorrow</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Chart -->
+            <div class="performance">
+                <h2>Performance Overview</h2>
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </main>
     </div>
 
-    <!-- Learning Section -->
-    <div class="dashboard-section">
-        <h4>My Learning</h4>
-        <div class="learning-grid">
-            <div class="learning-card">Python Programming</div>
-            <div class="learning-card">Web Development</div>
-            <div class="learning-card">AI & ML</div>
-        </div>
+    <script>
+        // Current Date & Time
+        const dateElement = document.getElementById('current-date');
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' };
+        const now = new Date();
+        dateElement.textContent = now.toLocaleDateString('en-US', options);
+
+        // Chart.js Performance Chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1','Week 2','Week 3','Week 4','Week 5','Week 6','Week 7','Week 8'],
+                datasets: [{
+                    label: 'Performance Score',
+                    data: [90,88,85,83,80,78,75,73],
+                    borderColor: '#8c7bff',
+                    backgroundColor: 'rgba(140,123,255,0.2)',
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#8c7bff',
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: true, position: 'top' } },
+                scales: {
+                    y: { beginAtZero: true, max: 100 },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
     </div>
-
-    <!-- Activity -->
-    <div class="dashboard-section">
-        <h4>Recent Activity</h4>
-        <ul class="activity-list">
-            <li>✔ Completed HTML Basics</li>
-            <li>✔ Updated Profile</li>
-            <li>✔ Enrolled in Data Science</li>
-        </ul>
-    </div>
-
-    <!-- Quick Actions -->
-    <div class="dashboard-section">
-        <h4>Quick Actions</h4>
-        <div class="action-buttons">
-            <a href="{% url 'profile' %}">Edit Profile</a>
-            <a href="{% url 'courses' %}">View Courses</a>
-        </div>
-    </div>
-
-</div>
-
-
-{% endblock %}
+</body>
+</html>

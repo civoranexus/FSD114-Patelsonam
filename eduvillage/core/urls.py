@@ -13,7 +13,6 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     path('signup/', signup, name='signup'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
-    path('dashboard/', dashboard, name='dashboard'),
     path('profile/', views.profile, name='profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('my-courses/', views.my_courses, name='my_courses'),
@@ -30,9 +29,9 @@ urlpatterns = [
    path('contact/', views.contact, name='contact'),
    path('my-profile/', views.profile, name='my_profile'),
    path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
-   path('student/dashboard/', views.dashboard_student, name='dashboard_student'),  
-
-
+   path('dashboard/', views.dashboard_student, name='dashboard_student'), 
+   path('study-planner/', views.study_planner, name='study_planner'),
+   path('assignments/', views.assignments, name='assignments'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

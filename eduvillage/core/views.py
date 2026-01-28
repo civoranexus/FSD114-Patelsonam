@@ -8,6 +8,8 @@ from .models import UserProfile, Enrollment
 from django.shortcuts import redirect, get_object_or_404
 from .models import Course, Enrollment
 from .forms import RegisterForm
+from django.contrib.auth import login 
+
 
 @login_required
 def edit_profile(request):
@@ -78,9 +80,23 @@ class UserLoginView(LoginView):
     template_name = 'core/login.html'
 
     def form_valid(self, form):
+        """Redirect users based on role after login."""
+        user = form.get_user()
+        login(self.request, user)
         messages.success(self.request, "Logged in successfully!")
-        return super().form_valid(form)
 
+        # Get user profile
+        profile = getattr(user, 'userprofile', None)
+        if profile:
+            if profile.role == 'student':
+                return redirect('dashboard_student')
+            elif profile.role == 'instructor':
+                return redirect('dashboard_instructor')  # if you have this
+            elif profile.role == 'admin':
+                return redirect('dashboard_admin')  # if you have this
+
+        # Fallback
+        return redirect('home')
 # Signup page
 def signup(request):
     if request.method == 'POST':
@@ -149,3 +165,21 @@ def register(request):
 @login_required
 def dashboard_student(request):
     return render(request, 'core/dashboard_student.html')
+def study_planner(request):
+    return render(request, 'core/study_planner.html')
+def assignments(request):
+    """
+    Temporary placeholder for Assignments page.
+    """
+    # You can pass dummy assignments for now
+    dummy_assignments = [
+        {'title': 'Math Homework', 'due_date': '2026-02-01'},
+        {'title': 'Science Project', 'due_date': '2026-02-05'},
+        {'title': 'English Essay', 'due_date': '2026-02-10'},
+    ]
+
+    context = {
+        'title': 'Assignments',
+        'assignments': dummy_assignments
+    }
+    return render(request, 'core/assignments.html', context)
