@@ -3,14 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import UserForm, EditProfileForm
-from .models import UserProfile, Enrollment
-from django.shortcuts import redirect, get_object_or_404
-from .models import Course, Enrollment
-from .forms import RegisterForm
-from django.contrib.auth import login 
+from django.urls import reverse
+from .forms import UserForm, EditProfileForm, RegisterForm
+from .models import UserProfile, Course, Enrollment
+from datetime import date
 
-
+# Edit profile
 @login_required
 def edit_profile(request):
     user = request.user
@@ -18,11 +16,7 @@ def edit_profile(request):
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
-        profile_form = EditProfileForm(
-            request.POST,
-            request.FILES,
-            instance=profile
-        )
+        profile_form = EditProfileForm(request.POST, request.FILES, instance=profile)
 
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
@@ -33,11 +27,7 @@ def edit_profile(request):
         user_form = UserForm(instance=user)
         profile_form = EditProfileForm(instance=profile)
 
-    context = {
-        'user_form': user_form,
-        'profile_form': profile_form,
-    }
-
+    context = {'user_form': user_form, 'profile_form': profile_form}
     return render(request, 'core/edit_profile.html', context)
 
 
@@ -45,20 +35,17 @@ def edit_profile(request):
 def home(request):
     return render(request, 'core/home.html')
 
+
 # About page
 def about(request):
     return render(request, 'core/about.html')
 
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from .models import UserProfile
 
+# Role-based dashboard
 @login_required
 def dashboard(request):
-    # Get or create profile (safety)
     profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-    # Role-based dashboard rendering
     if profile.role == 'student':
         template_name = 'core/dashboard_student.html'
     elif profile.role == 'instructor':
@@ -66,37 +53,98 @@ def dashboard(request):
     else:
         template_name = 'core/dashboard_admin.html'
 
+    context = {'profile': profile, 'user': request.user}
+    return render(request, template_name, context)
+@login_required
+def dashboard_student(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    # Allow only students
+    if profile.role != 'student':
+        return redirect('login')
+
+    # Enrolled courses
+    enrollments = Enrollment.objects.filter(user=request.user)
+
+    # Dummy Alerts
+    notices = [
+        {'type': 'Notice', 'message': 'Campus will be closed on 2026-02-05'},
+        {'type': 'Fee', 'message': 'Tuition fee due on 2026-02-10'},
+    ]
+
+    # Dummy Grade
+    grades = [
+        {
+            'course': 'Computer Science',
+            'score': 88,
+            'grade': 'A'
+        }
+    ]
+
     context = {
         'profile': profile,
-        'user': request.user
+        'notices': notices,
+        'grades': grades,
+        'enrollments': enrollments,
     }
 
-    return render(request, template_name, context)
+    return render(request, 'core/dashboard_student.html', context)
+
+# Instructor dashboard
+@login_required
+def dashboard_instructor(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if profile.role != 'instructor':
+        return redirect('login')
+
+    courses = Course.objects.filter(created_by=request.user)
+    total_courses = courses.count()
+    total_students = Enrollment.objects.filter(course__in=courses).count()
+
+    context = {'profile': profile, 'total_courses': total_courses, 'total_students': total_students}
+    return render(request, 'core/dashboard_instructor.html', context)
 
 
+# Admin dashboard
+@login_required
+def dashboard_admin(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    
+    # Allow only admin
+    if profile.role != 'admin':
+        return redirect('login')
+    
+    # Admin can see total users, courses, etc.
+    from django.contrib.auth.models import User
+    total_users = User.objects.count()
+    total_courses = Course.objects.count()
+    
+    context = {
+        'profile': profile,
+        'total_users': total_users,
+        'total_courses': total_courses,
+    }
+    
+    return render(request, 'core/dashboard_admin.html', context)
 
 # Login page
 class UserLoginView(LoginView):
     template_name = 'core/login.html'
 
-    def form_valid(self, form):
-        """Redirect users based on role after login."""
-        user = form.get_user()
-        login(self.request, user)
-        messages.success(self.request, "Logged in successfully!")
+    def get_success_url(self):
+        profile = UserProfile.objects.get(user=self.request.user)
 
-        # Get user profile
-        profile = getattr(user, 'userprofile', None)
-        if profile:
-            if profile.role == 'student':
-                return redirect('dashboard_student')
-            elif profile.role == 'instructor':
-                return redirect('dashboard_instructor')  # if you have this
-            elif profile.role == 'admin':
-                return redirect('dashboard_admin')  # if you have this
+        if profile.role == 'student':
+            return reverse('dashboard_student')
+        elif profile.role == 'instructor':
+            return reverse('dashboard_instructor')
+        elif profile.role == 'admin':
+            return reverse('dashboard_admin')
 
-        # Fallback
-        return redirect('home')
+        return reverse('home')
+
+
 # Signup page
 def signup(request):
     if request.method == 'POST':
@@ -109,48 +157,30 @@ def signup(request):
             messages.error(request, "Signup failed. Please correct the errors below.")
     else:
         form = UserCreationForm()
-
     return render(request, 'core/signup.html', {'form': form})
+
+
 # Logout
 class UserLogoutView(LogoutView):
     next_page = 'home'
-from django.contrib.auth.decorators import login_required
 
 
+# Profile page
 @login_required
 def profile(request):
     return render(request, 'core/profile.html')
 
+
+# My courses page
 @login_required
 def my_courses(request):
-    enrollments = Enrollment.objects.filter(user=request.user)
-    return render(request, 'core/my_courses.html', {'enrollments': enrollments})
+    enrollments = Enrollment.objects.filter(user=request.user).select_related('course')
 
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Account created successfully. Please login.')
-            return redirect('login')
-    else:
-        form = UserCreationForm()
+    return render(request, 'core/my_courses.html', {
+        'enrollments': enrollments
+    })
 
-    return render(request, 'core/register.html', {'form': form})
-def courses(request):
-    return render(request, 'core/courses.html')
-
-def contact(request):
-    return render(request, 'core/contact.html')
-@login_required
-def enroll_course(request, course_id):
-    course = Course.objects.get(id=course_id)
-    Enrollment.objects.get_or_create(
-        user=request.user,
-        course=course
-    )
-    return redirect('my_courses')
-
+# Register new user
 def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
@@ -159,27 +189,76 @@ def register(request):
             return redirect('login')
     else:
         form = RegisterForm()
-
     return render(request, 'core/register.html', {'form': form})
 
+
+# Courses page
+def courses(request):
+    return render(request, 'core/courses.html')
+
+
+# Contact page
+def contact(request):
+    return render(request, 'core/contact.html')
+
+
+# Enroll in course
 @login_required
-def dashboard_student(request):
-    return render(request, 'core/dashboard_student.html')
+def enroll_course(request, course_id):
+    course = Course.objects.get(id=course_id)
+    Enrollment.objects.get_or_create(user=request.user, course=course)
+    return redirect('my_courses')
+
+
+# Study planner
+@login_required
 def study_planner(request):
     return render(request, 'core/study_planner.html')
+
+
+# Assignments page
+@login_required
 def assignments(request):
-    """
-    Temporary placeholder for Assignments page.
-    """
-    # You can pass dummy assignments for now
     dummy_assignments = [
         {'title': 'Math Homework', 'due_date': '2026-02-01'},
         {'title': 'Science Project', 'due_date': '2026-02-05'},
         {'title': 'English Essay', 'due_date': '2026-02-10'},
     ]
+    context = {'title': 'Assignments', 'assignments': dummy_assignments}
+    return render(request, 'core/assignments.html', context)
+
+
+# Grades page
+@login_required
+def grades(request):
+    return render(request, 'core/grades.html')
+
+
+# Attendance page
+@login_required
+def attendance(request):
+    return render(request, 'core/attendance.html')
+
+
+# AI Tutor page
+@login_required
+def ai_tutor(request):
+    return render(request, 'core/ai_tutor.html')
+
+@login_required
+def grades(request):
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if profile.role != 'student':
+        return redirect('login')
+
+    grades = Grade.objects.filter(student=request.user)
 
     context = {
-        'title': 'Assignments',
-        'assignments': dummy_assignments
+        'grades': grades
     }
-    return render(request, 'core/assignments.html', context)
+
+    return render(request, 'core/grades.html', context)
+def student_attendance(request):
+    return render(request,'student/attendance.html')
+

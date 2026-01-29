@@ -1,28 +1,35 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Instructor Dashboard</title>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-</head>
-<body>
+{% extends "core/base.html" %}
 
-<div class="dashboard-container">
-    <h2>👨‍🏫 Instructor Dashboard</h2>
+{% block content %}
 
-    <p>Welcome <strong>{{ request.user.username }}</strong></p>
+<div style="padding:40px">
 
-    <div class="dashboard-links">
-        <a href="#">My Courses</a>
-        <a href="#">Create Course</a>
-        <a href="#">Student Enrollments</a>
+    <h2>Welcome Instructor 👩‍🏫</h2>
+
+    <p>Hello {{ request.user.username }}</p>
+
+    <hr>
+
+    <div style="display:flex; gap:20px">
+
+        <div class="card">
+            <h3>Total Courses</h3>
+            <p>{{ total_courses }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Students</h3>
+            <p>{{ total_students }}</p>
+        </div>
+
     </div>
 
-    <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button class="logout-btn" type="submit">Logout</button>
-    </form>
+    <br>
+
+    <a href="#">Create Course</a> |
+    <a href="#">View Enrollments</a> |
+    <a href="{% url 'logout' %}">Logout</a>
+
 </div>
 
-</body>
-</html>
+{% endblock %}

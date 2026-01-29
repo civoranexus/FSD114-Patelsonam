@@ -19,17 +19,32 @@
             <nav class="menu">
                 <h4>Main Menu</h4>
                 <ul>
-                    <li class="active">Dashboard</li>
-                    <li>My Courses</li>
-                    <li>Assignments <span class="badge">3</span></li>
-                    <li>Grades</li>
-                    <li>Attendance</li>
-                    <li>Face Recognition</li>
-                </ul>
-                <h4>Learning Tools</h4>
-                <ul>
-                    <li>AI Tutor</li>
-                </ul>
+                    <li class="active">
+        <a href="{% url 'dashboard_student' %}">Dashboard</a>
+    </li>
+   <li>
+    <a href="{% url 'my_courses' %}">My Courses ({{ enrollments.count }})</a>
+</li>
+    <li>
+        <a href="{% url 'assignments' %}">Assignments</a>
+    </li>
+
+    <li>
+        <a href="{% url 'grades' %}">Grades</a>
+    </li>
+
+    <li>
+        <a href="{% url 'attendance' %}">Attendance</a>
+    </li>
+
+    <li>
+        <a href="{% url 'study_planner' %}">Study Planner</a>
+    </li>
+
+    <li>
+        <a href="{% url 'ai_tutor' %}">AI Tutor</a>
+    </li>
+</ul>
             </nav>
         </aside>
 
@@ -41,13 +56,34 @@
                     <span>🏠 Home /</span> <span>Dashboard</span>
                 </div>
                 <div class="welcome">
-                    <h1>Welcome Back, student 👋</h1>
+                   <h1>Welcome Back, {{ request.user.username }} 👋</h1>
+                   <p>Student Dashboard</p>
+
                     <p id="current-date"></p>
                 </div>
             </div>
+                     <div class="logout-btn">
+                     <a href="{% url 'logout' %}">Logout</a>
+                           </div>
+                             </div>
+                             
+    <div class="notifications">
+    <h2>Alerts & Notifications</h2>
+        <ul>
+        {% for notice in notices %}
+<li>
+    <strong>{{ notice.type }}</strong>: {{ notice.message }}
+</li>
+{% empty %}
+<li>No alerts at this moment!</li>
+{% endfor %}
 
-            <!-- Summary Cards -->
-            <div class="summary-cards">
+    </ul>
+</div>
+
+
+      <!-- Summary Cards -->
+     <div class="summary-cards">
                 <div class="card">
                     <div class="icon">📚</div>
                     <div class="info">
@@ -81,49 +117,31 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Performance Chart -->
             <div class="performance">
-                <h2>Performance Overview</h2>
-                <canvas id="performanceChart"></canvas>
-            </div>
-        </main>
-    </div>
+    <h2>My Courses</h2>
 
-    <script>
-        // Current Date & Time
-        const dateElement = document.getElementById('current-date');
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour:'2-digit', minute:'2-digit', second:'2-digit' };
-        const now = new Date();
-        dateElement.textContent = now.toLocaleDateString('en-US', options);
+    {% for enroll in enrollments %}
+        <p>📘 {{ enroll.course.title }}</p>
+    {% empty %}
+        <p>No courses enrolled yet.</p>
+    {% endfor %}
+</div>
+<div class="grades">
+    <h2>Grades</h2>
 
-        // Chart.js Performance Chart
-        const ctx = document.getElementById('performanceChart').getContext('2d');
-        const performanceChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Week 1','Week 2','Week 3','Week 4','Week 5','Week 6','Week 7','Week 8'],
-                datasets: [{
-                    label: 'Performance Score',
-                    data: [90,88,85,83,80,78,75,73],
-                    borderColor: '#8c7bff',
-                    backgroundColor: 'rgba(140,123,255,0.2)',
-                    tension: 0.3,
-                    fill: true,
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#8c7bff',
-                    pointHoverRadius: 6
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: true, position: 'top' } },
-                scales: {
-                    y: { beginAtZero: true, max: 100 },
-                    x: { grid: { display: false } }
-                }
-            }
-        });
+    {% for g in grades %}
+        <div class="grade-card">
+            <p><strong>Course:</strong> {{ g.course }}</p>
+            <p><strong>Score:</strong> {{ g.score }}</p>
+            <p><strong>Grade:</strong> {{ g.grade }}</p>
+        </div>
+    {% empty %}
+        <p>No grades available.</p>
+    {% endfor %}
+</div>
+
+
+
     </script>
     </div>
 </body>

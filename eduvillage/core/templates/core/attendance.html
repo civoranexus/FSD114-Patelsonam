@@ -1,0 +1,114 @@
+{% load static %}
+{% include 'core/sidebar.html' %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Attendance | EduVillage</title>
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+
+
+<div class="main">
+
+<h2>📊 Attendance Overview</h2>
+
+<!-- Summary Cards -->
+<div class="attendance-summary">
+
+<div class="summary-card">
+<h3>Present</h3>
+<p>18 Days</p>
+</div>
+
+<div class="summary-card">
+<h3>Absent</h3>
+<p>2 Days</p>
+</div>
+
+<div class="summary-card">
+<h3>Late</h3>
+<p>1 Day</p>
+</div>
+
+<div class="summary-card">
+<h3>Total</h3>
+<p>21 Days</p>
+</div>
+
+</div>
+
+<!-- Progress -->
+<div class="attendance-progress">
+<p>Attendance Percentage</p>
+<div class="progress-bar">
+<div class="progress-fill" style="width:86%"></div>
+</div>
+<span>86%</span>
+</div>
+
+<!-- Filter -->
+<div class="attendance-filter">
+<select>
+<option>January 2026</option>
+<option>December 2025</option>
+<option>November 2025</option>
+</select>
+</div>
+
+<!-- Attendance Table -->
+<div class="attendance-table">
+
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Subject</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>28 Jan</td>
+<td>Web Development</td>
+<td><span class="present">Present</span></td>
+</tr>
+
+<tr>
+<td>27 Jan</td>
+<td>Python</td>
+<td><span class="absent">Absent</span></td>
+</tr>
+
+<tr>
+<td>26 Jan</td>
+<td>DBMS</td>
+<td><span class="late">Late</span></td>
+</tr>
+
+<tr>
+<td>25 Jan</td>
+<td>React</td>
+<td><span class="present">Present</span></td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

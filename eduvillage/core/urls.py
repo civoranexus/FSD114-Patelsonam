@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LogoutView
-from .views import home, about, dashboard, UserLoginView, signup, UserLogoutView
+from .views import home, about, dashboard_student, dashboard_instructor,dashboard_admin, signup, UserLogoutView, UserLoginView
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,9 +29,19 @@ urlpatterns = [
    path('contact/', views.contact, name='contact'),
    path('my-profile/', views.profile, name='my_profile'),
    path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
-   path('dashboard/', views.dashboard_student, name='dashboard_student'), 
    path('study-planner/', views.study_planner, name='study_planner'),
    path('assignments/', views.assignments, name='assignments'),
+   path('dashboard/instructor/', views.dashboard_instructor, name='dashboard_instructor'),
+   path('dashboard/student/', dashboard_student, name='dashboard_student'),
+   path('dashboard/admin/', dashboard_admin, name='dashboard_admin'),
+   path('grades/', views.grades, name='grades'),
+   path('attendance/', views.attendance, name='attendance'),
+   path('ai-tutor/', views.ai_tutor, name='ai_tutor'),
+   path('student/attendance/', views.student_attendance, name='student_attendance'),
+
+
+
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
