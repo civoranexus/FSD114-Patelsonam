@@ -1,0 +1,408 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background: #a2b9db;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+h2, h3 {
+    text-align: center;
+    color: #141b23;
+}
+
+.form-card {
+    background: #81b4cc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.form-card input {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.submit-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #2563eb;
+}
+
+.planner-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.day-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.day-card h4 {
+    margin-bottom: 10px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.edit-btn {
+    background: #3b82f6;
+    color: white;
+}
+
+.edit-btn:hover { background: #2563eb; }
+
+.delete-btn {
+    background: #ef4444;
+    color: white;
+}
+
+.delete-btn:hover { background: #b91c1c; }
+
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 8px 15px;
+    background: #6b7280;
+    color: #fff;
+    border-radius: 8px;
+    text-decoration: none;
+}
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.task-text {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.task-actions a {
+    margin-left: 12px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.task-actions .edit {
+    color: #2563eb;
+}
+
+.task-actions .delete {
+    color: #dc2626;
+}
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+}
+
+h2, h3 {
+    text-align: center;
+    color: #1f2937;
+}
+
+.form-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.form-card input {
+    width: 100%;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.submit-btn {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #2563eb;
+}
+
+.planner-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.day-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.day-card h4 {
+    margin-bottom: 10px;
+}
+/* ===============================
+   STUDY PLANNER – LIGHT THEME
+   =============================== */
+
+* {
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #c0d8fc; /* very light blue */
+    margin: 0;
+    padding: 0;
+    color: #2c2f36;
+}
+
+/* Main container */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+}
+
+/* Page title */
+.container h2 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1e3a8a; /* soft blue */
+}
+
+/* Card */
+.form-card {
+    background: #ffffff;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+    margin-bottom: 35px;
+}
+
+/* Form layout */
+.form-card form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+/* Inputs */
+.form-card input {
+    padding: 13px 15px;
+    border-radius: 12px;
+    border: 1px solid #dbe2ea;
+    font-size: 14px;
+    background: #f9fbff;
+}
+
+.form-card input:focus {
+    outline: none;
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.35);
+}
+
+/* Add button */
+.submit-btn {
+    grid-column: span 2;
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(59, 130, 246, 0.3);
+}
+
+/* Divider */
+hr {
+    border: none;
+    border-top: 1px solid #e5eaf1;
+    margin: 40px 0;
+}
+
+/* Planned tasks heading */
+h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #1f2937;
+}
+
+/* Date heading */
+h3 + h3 {
+    font-size: 18px;
+    margin-top: 30px;
+    color: #475569;
+}
+
+/* Task list */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+/* Task card */
+.task-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 16px 18px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #93c5fd;
+}
+
+/* Task text */
+.task-text {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* Actions */
+.task-actions a {
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 14px;
+    font-weight: 500;
+}
+
+.task-actions .edit {
+    color: #2563eb;
+}
+
+.task-actions .edit:hover {
+    text-decoration: underline;
+}
+
+.task-actions .delete {
+    color: #ef4444;
+}
+
+.task-actions .delete:hover {
+    text-decoration: underline;
+}
+
+/* Back link */
+.back-btn {
+    display: inline-block;
+    margin-top: 25px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #2563eb;
+    font-weight: 500;
+}
+
+.back-btn:hover {
+    text-decoration: underline;
+}
+
+/* Empty text */
+p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .form-card form {
+        grid-template-columns: 1fr;
+    }
+
+    .submit-btn {
+        grid-column: span 1;
+    }
+
+    .task-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+.back-btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 22px;
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.back-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(59, 130, 246, 0.3);
+}

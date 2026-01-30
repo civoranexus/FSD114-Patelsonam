@@ -1,14 +1,156 @@
 {% load static %}
-{% include 'core/sidebar.html' %}
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Student Attendance | EduVillage</title>
+<div class="top-header">
+    <h2>EduVillage</h2>
 
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <div>
+        <a href="{% url 'dashboard_student' %}">Dashboard</a>
+        <a href="{% url 'my_courses' %}">Courses</a>
+        <a href="#">Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+
+
+
+<style>
+/* Top Header Band */
+
+.top-header {
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(90deg, #16a085, #2ecc71);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+/* Logo */
+
+.top-header h2 {
+    color: white;
+    margin: 0;
+}
+
+/* Header Menu */
+
+.top-header a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.top-header a:hover {
+    text-decoration: underline;
+}
+
+
+/* Attendance Page */
+
+.main {
+    padding: 30px;
+}
+
+/* Back Button */
+.btn-back {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #6c757d;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.btn-back:hover {
+    background: #555;
+}
+
+/* Summary Cards */
+.attendance-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.summary-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    text-align: center;
+}
+
+.summary-card h3 {
+    margin-bottom: 8px;
+}
+
+/* Progress */
+.attendance-progress {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+    margin-bottom: 20px;
+}
+
+.progress-bar {
+    height: 12px;
+    background: #eee;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #4A90E2;
+}
+
+/* Filter */
+.attendance-filter select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+/* Table */
+.attendance-table {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.present { color: green; font-weight: 600; }
+.absent { color: red; font-weight: 600; }
+.late { color: orange; font-weight: 600; }
+
+tr:hover {
+    background: #f9fafb;
+}
+
+</style>
 
 </head>
 
@@ -16,9 +158,10 @@
 
 <div class="dashboard">
 
-
-
 <div class="main">
+
+<!-- Back Button -->
+<a href="{% url 'dashboard_student' %}" class="btn-back">← Back to Dashboard</a>
 
 <h2>📊 Attendance Overview</h2>
 
@@ -50,10 +193,12 @@
 <!-- Progress -->
 <div class="attendance-progress">
 <p>Attendance Percentage</p>
+
 <div class="progress-bar">
 <div class="progress-fill" style="width:86%"></div>
 </div>
-<span>86%</span>
+
+<strong>86%</strong>
 </div>
 
 <!-- Filter -->
@@ -78,28 +223,29 @@
 </thead>
 
 <tbody>
+
 <tr>
 <td>28 Jan</td>
 <td>Web Development</td>
-<td><span class="present">Present</span></td>
+<td class="present">Present</td>
 </tr>
 
 <tr>
 <td>27 Jan</td>
 <td>Python</td>
-<td><span class="absent">Absent</span></td>
+<td class="absent">Absent</td>
 </tr>
 
 <tr>
 <td>26 Jan</td>
 <td>DBMS</td>
-<td><span class="late">Late</span></td>
+<td class="late">Late</td>
 </tr>
 
 <tr>
 <td>25 Jan</td>
 <td>React</td>
-<td><span class="present">Present</span></td>
+<td class="present">Present</td>
 </tr>
 
 </tbody>

@@ -116,117 +116,121 @@ section {
   background: #ccc;
   padding: 10px 20px;
 }
+/* Body and page background */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa; /* soft light background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Auth container */
+.auth-container {
+    background: #ffffff;
+    padding: 40px 30px;
+    width: 360px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo */
 .login-logo {
     width: 120px;
-    margin-bottom: 15px;
-}
-.nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 20px;
 }
 
-.nav-logo img {
-    width: 40px;
-    height: auto;
-}
-body {
-    background: linear-gradient(to right, #4facfe, #00f2fe);
-    font-family: Arial;
-}
-
-.login-container {
-    width: 350px;
-    margin: 100px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background: #4facfe;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-body {
-    background: linear-gradient(to right, #4faffe, white);
-    font-family: Arial, sans-serif;
-}
-
-.login-container {
-    width: 350px;
-    margin: 100px auto;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-button {
-    width: 100%;
-    padding: 10px;
-    background: #4facfe;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.auth-body {
-    background: radial-gradient(circle at top, #2b2e4a, #000);
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-.auth-container {
-    background: #111;
-    padding: 30px;
-    width: 340px;
-    border-radius: 14px;
-    box-shadow: 0 0 30px rgba(128, 90, 213, 0.5);
-    color: white;
-}
-
+/* Heading */
 .auth-container h2 {
+    margin-bottom: 8px;
+    font-size: 24px;
     text-align: center;
+    color: #333;
 }
 
 .subtitle {
     text-align: center;
     font-size: 14px;
-    opacity: 0.8;
+    opacity: 0.7;
+    margin-bottom: 20px;
 }
 
+/* Inputs and selects */
 .auth-container input,
 .auth-container select {
     width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border-radius: 8px;
-    border: none;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #fefefe;
+    color: #333;
+    font-size: 14px;
 }
 
+.auth-container input::placeholder {
+    color: #999;
+}
+
+/* Buttons */
 .btn-primary {
     width: 100%;
-    background: linear-gradient(90deg, #6a5acd, #00bcd4);
-    border: none;
-    padding: 12px;
-    color: rgb(24, 32, 78);
-    font-weight: bold;
-    border-radius: 8px;
+    padding: 14px;
     margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
     cursor: pointer;
+    background: linear-gradient(90deg, #6a5acd, #00bcd4);
+    color: #fff;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
 
+.btn-primary:hover {
+    background: linear-gradient(90deg, #5a4dbf, #00a4b0);
+    transform: translateY(-2px);
+}
+
+/* Switch link */
 .switch-link {
     text-align: center;
-    margin-top: 12px;
+    margin-top: 15px;
+    font-size: 13px;
+    opacity: 0.7;
 }
+
+.switch-link a {
+    color: #6a5acd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 400px) {
+    .auth-container {
+        width: 90%;
+        padding: 30px 20px;
+    }
+}
+
 /* ===== Student Dashboard ===== */
 
 .dashboard-wrapper {

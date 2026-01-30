@@ -1,12 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse
 from .forms import UserForm, EditProfileForm, RegisterForm
-from .models import UserProfile, Course, Enrollment
-from datetime import date
+from .models import UserProfile, Course, Enrollment,Grade
+from datetime import date, timedelta
+from .models import StudyTask
 
 # Edit profile
 @login_required
@@ -80,12 +81,22 @@ def dashboard_student(request):
             'grade': 'A'
         }
     ]
+    study_tasks = StudyTask.objects.filter(
+        user=request.user
+    ).order_by('study_date')[:5]
+
+    today_tasks = StudyTask.objects.filter(
+        user=request.user,
+        study_date=date.today()
+    )
 
     context = {
         'profile': profile,
         'notices': notices,
         'grades': grades,
         'enrollments': enrollments,
+        'study_tasks': study_tasks,
+        'today_tasks': today_tasks,
     }
 
     return render(request, 'core/dashboard_student.html', context)
@@ -213,9 +224,24 @@ def enroll_course(request, course_id):
 # Study planner
 @login_required
 def study_planner(request):
-    return render(request, 'core/study_planner.html')
+    today = date.today()
+    week = [today + timedelta(days=i) for i in range(7)]
 
+    planner = []
+    task_counter = 1  # unique ID for each task
+    for day in week:
+        tasks = [
+            {'id': task_counter, 'subject': 'Math', 'duration': 1},
+            {'id': task_counter + 1, 'subject': 'English', 'duration': 2},
+            {'id': task_counter + 2, 'subject': 'Science', 'duration': 1.5},
+        ]
+        planner.append({
+            'date': day,
+            'tasks': tasks
+        })
+        task_counter += 3
 
+    return render(request, 'core/study_planner.html', {'planner': planner})
 # Assignments page
 @login_required
 def assignments(request):
@@ -261,4 +287,37 @@ def grades(request):
     return render(request, 'core/grades.html', context)
 def student_attendance(request):
     return render(request,'student/attendance.html')
+
+@login_required
+def edit_task(request, task_id):
+    task = get_object_or_404(StudyTask, id=task_id, user=request.user)
+
+    if request.method == 'POST':
+        task.subject = request.POST.get('subject')
+        task.topic = request.POST.get('topic')
+        task.study_date = request.POST.get('study_date')
+        task.duration_hours = request.POST.get('duration')
+        task.save()
+        return redirect('study_planner')
+
+    return render(request, 'edit_task.html', {'task': task})
+
+@login_required
+def delete_task(request, task_id):
+    task = get_object_or_404(StudyTask, id=task_id, user=request.user)
+    task.delete()
+    return redirect('study_planner')
+@login_required
+def weekly_planner(request):
+    today = date.today()
+    week_end = today + timedelta(days=6)
+
+    tasks = StudyTask.objects.filter(
+        user=request.user,
+        study_date__range=[today, week_end]
+    ).order_by('study_date')
+
+    return render(request, 'core/weekly_planner.html', {'tasks': tasks})
+
+
 

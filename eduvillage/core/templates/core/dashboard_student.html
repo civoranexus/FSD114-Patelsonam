@@ -5,144 +5,141 @@
     <meta charset="UTF-8">
     <title>EduVillage | Student Dashboard</title>
 
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}?v=2">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="logo">
-                <h2>EduVillage</h2>
-            </div>
-            <nav class="menu">
-                <h4>Main Menu</h4>
-                <ul>
-                    <li class="active">
-        <a href="{% url 'dashboard_student' %}">Dashboard</a>
-    </li>
-   <li>
-    <a href="{% url 'my_courses' %}">My Courses ({{ enrollments.count }})</a>
-</li>
-    <li>
-        <a href="{% url 'assignments' %}">Assignments</a>
-    </li>
 
-    <li>
-        <a href="{% url 'grades' %}">Grades</a>
-    </li>
-
-    <li>
-        <a href="{% url 'attendance' %}">Attendance</a>
-    </li>
-
-    <li>
-        <a href="{% url 'study_planner' %}">Study Planner</a>
-    </li>
-
-    <li>
-        <a href="{% url 'ai_tutor' %}">AI Tutor</a>
-    </li>
-</ul>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Header / Breadcrumb -->
-            <div class="header">
-                <div class="breadcrumb">
-                    <span>🏠 Home /</span> <span>Dashboard</span>
-                </div>
-                <div class="welcome">
-                   <h1>Welcome Back, {{ request.user.username }} 👋</h1>
-                   <p>Student Dashboard</p>
-
-                    <p id="current-date"></p>
-                </div>
-            </div>
-                     <div class="logout-btn">
-                     <a href="{% url 'logout' %}">Logout</a>
-                           </div>
-                             </div>
-                             
-    <div class="notifications">
-    <h2>Alerts & Notifications</h2>
-        <ul>
-        {% for notice in notices %}
-<li>
-    <strong>{{ notice.type }}</strong>: {{ notice.message }}
-</li>
-{% empty %}
-<li>No alerts at this moment!</li>
-{% endfor %}
-
-    </ul>
-</div>
-
-
-      <!-- Summary Cards -->
-     <div class="summary-cards">
-                <div class="card">
-                    <div class="icon">📚</div>
-                    <div class="info">
-                        <h2>6</h2>
-                        <p>Enrolled Courses</p>
-                        <span class="update">↑ 2 new this semester</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="icon">✅</div>
-                    <div class="info">
-                        <h2>94.2%</h2>
-                        <p>Attendance Rate</p>
-                        <span class="update">↑ 3.2% improvement</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="icon">🏆</div>
-                    <div class="info">
-                        <h2>0.0</h2>
-                        <p>Current GPA</p>
-                        <span class="update">↑ 0.3 from last sem</span>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="icon">📝</div>
-                    <div class="info">
-                        <h2>3</h2>
-                        <p>Pending Tasks</p>
-                        <span class="update alert">⚠ 1 due tomorrow</span>
-                    </div>
-                </div>
-            </div>
-            <div class="performance">
-    <h2>My Courses</h2>
-
-    {% for enroll in enrollments %}
-        <p>📘 {{ enroll.course.title }}</p>
-    {% empty %}
-        <p>No courses enrolled yet.</p>
-    {% endfor %}
-</div>
-<div class="grades">
-    <h2>Grades</h2>
-
-    {% for g in grades %}
-        <div class="grade-card">
-            <p><strong>Course:</strong> {{ g.course }}</p>
-            <p><strong>Score:</strong> {{ g.score }}</p>
-            <p><strong>Grade:</strong> {{ g.grade }}</p>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>EduVillage</h2>
         </div>
-    {% empty %}
-        <p>No grades available.</p>
-    {% endfor %}
+
+        <nav class="menu">
+            <h4>Main Menu</h4>
+            <ul>
+                <li class="active"><a href="{% url 'dashboard_student' %}">Dashboard</a></li>
+                <li><a href="{% url 'my_courses' %}">My Courses ({{ enrollments.count }})</a></li>
+                <li><a href="{% url 'assignments' %}">Assignments</a></li>
+                <li><a href="{% url 'attendance' %}">Attendance</a></li>
+                <li><a href="{% url 'study_planner' %}">Study Planner</a></li>
+            </ul>
+        </nav>
+
+        <!-- Logout Button at bottom -->
+        <div class="sidebar-logout">
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <!-- Header / Breadcrumb -->
+        <div class="header">
+            <div class="breadcrumb">
+                <span>🏠 Home /</span> <span>Dashboard</span>
+            </div>
+            <div class="welcome">
+                <h1>Welcome Back, {{ request.user.username }} 👋</h1>
+                <p>Student Dashboard</p>
+                <p id="current-date"></p>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div class="notifications">
+            <h2>Alerts & Notifications</h2>
+            <ul>
+                {% for notice in notices %}
+                    <li><strong>{{ notice.type }}</strong>: {{ notice.message }}</li>
+                {% empty %}
+                    <li>No alerts at this moment!</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-cards">
+            <div class="card">
+                <div class="icon">📚</div>
+                <div class="info">
+                    <h2>6</h2>
+                    <p>Enrolled Courses</p>
+                    <span class="update">↑ 2 new this semester</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">✅</div>
+                <div class="info">
+                    <h2>94.2%</h2>
+                    <p>Attendance Rate</p>
+                    <span class="update">↑ 3.2% improvement</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">🏆</div>
+                <div class="info">
+                    <h2>0.0</h2>
+                    <p>Current GPA</p>
+                    <span class="update">↑ 0.3 from last sem</span>
+                </div>
+            </div>
+            <div class="card">
+                <div class="icon">📝</div>
+                <div class="info">
+                    <h2>3</h2>
+                    <p>Pending Tasks</p>
+                    <span class="update alert">⚠ 1 due tomorrow</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Courses -->
+        <div class="performance">
+            <h2>My Courses</h2>
+            {% for enroll in enrollments %}
+                <p>📘 {{ enroll.course.title }}</p>
+            {% empty %}
+                <p>No courses enrolled yet.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Grades -->
+        <div class="grades">
+            <h2>Grades</h2>
+            {% for g in grades %}
+                <div class="grade-card">
+                    <p><strong>Course:</strong> {{ g.course }}</p>
+                    <p><strong>Score:</strong> {{ g.score }}</p>
+                    <p><strong>Grade:</strong> {{ g.grade }}</p>
+                </div>
+            {% empty %}
+                <p>No grades available.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Upcoming Study Tasks -->
+        <div class="card upcoming-tasks">
+            <h3>📘 Upcoming Study Tasks</h3>
+            <ul>
+                {% for task in tasks %}
+                    <li>{{ task.subject }} – {{ task.study_date }}</li>
+                {% empty %}
+                    <li>No tasks planned</li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'study_planner' %}">View Full Planner →</a>
+            <a href="{% url 'weekly_planner' %}">📅 Weekly Planner</a>
+        </div>
+
+    </main>
 </div>
-
-
-
-    </script>
-    </div>
 </body>
 </html>

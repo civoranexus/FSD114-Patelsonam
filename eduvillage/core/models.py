@@ -44,6 +44,26 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=20, choices=[('student','Student'),('teacher','Teacher'),('admin','Admin')])
 
+class Grade(models.Model):
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=100, default="Unknown")  # ✅ DEFAULT
+    marks = models.IntegerField(default=0)
+    grade = models.CharField(max_length=2, default="NA")           # (optional but good)
+
+    def __str__(self):
+        return f"{self.student.username} - {self.subject}"
+    
+class StudyTask(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.CharField(max_length=100)
+    topic = models.CharField(max_length=200)
+    study_date = models.DateField()
+    duration_hours = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.subject} - {self.topic}"
+
+
 # Auto-create Profile when User is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
