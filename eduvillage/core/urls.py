@@ -1,0 +1,53 @@
+from django.urls import path
+from . import views
+from django.contrib.auth.views import LogoutView
+from .views import home, about, dashboard_student, dashboard_instructor,dashboard_admin, signup, UserLogoutView, UserLoginView
+from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
+urlpatterns = [
+    path('', home, name='home'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('study-planner/', views.study_planner, name='study_planner'),
+    path('about/', about, name='about'),
+    path('login/', UserLoginView.as_view(), name='login'),
+    path('signup/', signup, name='signup'),
+    path('logout/', UserLogoutView.as_view(), name='logout'),
+    path('profile/', views.profile, name='profile'),
+    path('notifications/', views.notifications, name='notifications'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('my-courses/', views.my_courses, name='my_courses'),
+    path(
+    'password-change/',
+    auth_views.PasswordChangeView.as_view(
+        template_name='core/change_password.html',
+        success_url='/profile/'
+    ),
+    name='password_change'
+    
+),
+   path('register/', views.register, name='register'),
+   path('courses/', views.courses, name='courses'),
+   path('contact/', views.contact, name='contact'),
+   path('my-profile/', views.profile, name='my_profile'),
+   path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
+   path('assignments/', views.assignments, name='assignments'),
+   path('dashboard/instructor/', views.dashboard_instructor, name='dashboard_instructor'),
+   path('dashboard/student/', dashboard_student, name='dashboard_student'),
+   path('dashboard/admin/', dashboard_admin, name='dashboard_admin'),
+   path('attendance/', views.attendance, name='attendance'),
+   path('student/attendance/', views.student_attendance, name='student_attendance'),
+   path('study-planner/', views.study_planner, name='study_planner'),
+   path('study-planner/edit/<int:task_id>/', views.edit_task, name='edit_task'),
+   path('study-planner/delete/<int:task_id>/', views.delete_task, name='delete_task'),
+   path('weekly-planner/', views.weekly_planner, name='weekly_planner'),
+   path('grades/', views.grades, name='grades'),
+   path('calendar/', views.calendar_view, name='calendar'), 
+
+
+]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

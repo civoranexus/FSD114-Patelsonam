@@ -1,0 +1,105 @@
+{% load static %}
+{% include 'core/sidebar.html' %}
+
+{% load static %}
+<div class="main-content">
+<div class="container mt-5">
+  <h2 class="text-center mb-4 fw-bold">My Courses</h2>
+
+  <!-- Display messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% if enrollments %}
+    <div class="row g-4">
+      {% for enrollment in enrollments %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card course-card shadow-sm border-0 h-100">
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title fw-bold">{{ enrollment.course.title }}</h5>
+              
+              <!-- Course Progress -->
+              <p class="text-muted small mb-2">Progress</p>
+              <div class="progress mb-3" style="height: 10px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{ enrollment.progress|default:"0" }}%;" aria-valuenow="{{ enrollment.progress|default:"0" }}" aria-valuemin="0" aria-valuemax="100">
+                  {{ enrollment.progress|default:"0" }}%
+                </div>
+              </div>
+
+              <!-- Continue Learning Button -->
+              <a href="#" class="btn btn-primary mt-auto w-100 course-btn">Continue Learning</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center mt-5">
+      <img src="{% static 'images/no_courses.svg' %}" alt="No Courses" class="mb-3" style="width: 200px;">
+      <h4 class="mb-3">You are not enrolled in any courses yet!</h4>
+      <a href="{% url 'courses' %}" class="btn btn-lg btn-success">Browse Courses</a>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Custom CSS -->
+<style>
+.course-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 12px;
+}
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.course-btn {
+    transition: background-color 0.3s, transform 0.3s;
+}
+.course-btn:hover {
+    background-color: #0069d9;
+    transform: scale(1.02);
+/* Top Header Band */
+
+.top-header {
+    width: 100%;
+    height: 70px;
+    background: linear-gradient(90deg, #16a085, #2ecc71);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+/* Logo */
+
+.top-header h2 {
+    color: white;
+    margin: 0;
+}
+
+/* Header Menu */
+
+.top-header a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.top-header a:hover {
+    text-decoration: underline;
+}
+
+}
+</style>
+</div>
+</div>
+
+

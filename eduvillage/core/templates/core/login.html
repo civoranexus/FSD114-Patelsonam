@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EduVillage</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2">
+
+</head>
+<body class="login-page">
+
+
+    <div class="auth-container">
+     <img src="{% static 'images/logo.png' %}" 
+     alt="EduVillage Logo"
+     style="width:120px; margin-bottom:15px;">
+
+
+        <h2>Welcome Back</h2>
+        <p class="subtitle">Login to continue your learning journey</p>
+
+        <!-- Login form -->
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Role Selection -->
+            <label>Select Role</label>
+            <select name="role" required>
+                <option value="student">🎓 Student</option>
+                <option value="instructor">👨‍🏫 Instructor
+                </option>
+                <option value="admin">🛠 Admin</option>
+            </select>
+
+            <!-- Username and Password -->
+            {{ form.as_p }}
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-primary">Login →</button>
+        </form>
+
+        <!-- Signup link -->
+        <p class="switch-link">
+            Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a>
+        </p>
+        
+    </div>
+
+</body>
+</html>
