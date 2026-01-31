@@ -285,3 +285,85 @@ body {
 .top-header a:hover {
     text-decoration: underline;
 }
+.dashboard-card {
+  height: 150px;                  /* same height for all cards */
+  border-radius: 12px;
+  background-color: #f8f9fa;       /* soft neutral background */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08); /* subtle shadow */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  color: #333;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #555;
+}
+/* Glow effect for cards */
+.glow-card {
+  border-radius: 12px;
+  background-color: #1e1e2f;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.glow-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 123, 255, 0.8);
+}
+
+/* Buttons with glow */
+.glow-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.7);
+  transition: all 0.3s;
+}
+
+.glow-btn:hover {
+  box-shadow: 0 0 20px rgba(0, 123, 255, 1);
+  transform: translateY(-2px);
+}
+
+/* Blinking buttons for urgent actions */
+.blink-btn {
+  animation: blink 1.2s infinite;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.4; }
+}
+
+/* Course cards */
+.course-card {
+  border-radius: 12px;
+  background-color: #2a2a3c;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+}
+
+/* Quick action buttons */
+.action-btn {
+  font-weight: 600;
+  padding: 10px;
+}

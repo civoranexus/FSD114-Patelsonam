@@ -1,67 +1,167 @@
-/* Reset issues */
+/* ========== GLOBAL ========== */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
+    overflow-x: hidden;
 }
 
-/* ================= HERO SECTION ================= */
+/* ========== HERO SECTION ========== */
 .hero-section {
-    background: linear-gradient(to right, #212529, #343a40);
-    padding: 100px 20px;
+    min-height: 90vh;
+    background: linear-gradient(120deg, #1e293b, #111827);
+    display: flex;
+    align-items: center;
     text-align: center;
 }
 
-/* Fix hero content width */
 .hero-section .container {
     max-width: 900px;
 }
 
-/* ================= FEATURES ================= */
+/* ========== CARDS ========== */
 .card {
     border-radius: 12px;
 }
 
-/* Prevent text breaking vertically */
-.card-text {
-    word-break: normal;
-    white-space: normal;
-}
-
-/* ================= IMPACT ================= */
+/* ========== SECTIONS ========== */
 section {
     width: 100%;
+    padding: 4rem 0;
 }
 
-/* ================= CTA ================= */
+/* ========== CTA ========== */
 .bg-dark {
     background-color: #212529 !important;
 }
 
-/* ================= FOOTER ================= */
+/* ========== FOOTER ========== */
 footer {
     font-size: 14px;
 }
-.hero-section {
-    min-height: 90vh;
-    background: linear-gradient(120deg, #1e293b, #111827);
-    display: flex;
-    align-items: center;
-}
-.card {
-    border-radius: 12px;
+
+/* ========== SAFETY NET (prevents vertical text) ========== */
+h1, h2, h3, h4, h5, h6, p, span, div {
+    writing-mode: horizontal-tb !important;
+    white-space: normal;
 }
 
-section {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+/* =====================================================
+   LOGIN / AUTH PAGE STYLES
+===================================================== */ 
+.login-page {
+  height: 100vh;
+  background: #f5f7fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
-.hero-section {
-    min-height: 90vh;
-    background: linear-gradient(120deg, #1e293b, #111827);
-    display: flex;
-    align-items: center;
+
+.login-page .auth-container {
+  background: #ffffff;
+  padding: 40px 30px;
+  width: 360px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.login-page .auth-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.login-page .login-logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.login-page .auth-container h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+  text-align: center;
+  color: #333;
+}
+
+.login-page .subtitle {
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.7;
+  margin-bottom: 20px;
+}
+
+.login-page input,
+.login-page select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: #fefefe;
+  color: #333;
+  font-size: 14px;
+}
+
+.login-page input::placeholder {
+  color: #999;
+}
+
+.login-page .btn-primary {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(90deg, #6a5acd, #00bcd4);
+  color: #fff;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.login-page .btn-primary:hover {
+  background: linear-gradient(90deg, #5a4dbf, #00a4b0);
+  transform: translateY(-2px);
+}
+
+.login-page .switch-link {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.login-page .switch-link a {
+  color: #6a5acd;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-page .switch-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 400px) {
+  .login-page .auth-container {
+    width: 90%;
+    padding: 30px 20px;
+  }
+}
+
+/* =====================================================
+   PROFILE / EDIT PROFILE
+===================================================== */
 .profile-card {
   max-width: 500px;
   margin: auto;
@@ -75,6 +175,7 @@ section {
   width: 120px;
   border-radius: 50%;
 }
+
 .edit-profile-container {
   max-width: 700px;
   margin: 40px auto;
@@ -116,19 +217,167 @@ section {
   background: #ccc;
   padding: 10px 20px;
 }
-/* Body and page background */
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f5f7fa; /* soft light background */
+
+/* =====================================================
+   DASHBOARD STYLES
+===================================================== */
+.dashboard-wrapper {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-header h2 {
+  font-weight: 600;
+}
+
+.dashboard-wrapper .subtitle {
+  color: #555;
+  font-size: 15px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.progress {
+  background: #e9ecef;
+  height: 8px;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #4CAF50;
+  border-radius: 6px;
+}
+
+.dashboard-section {
+  margin-bottom: 35px;
+}
+
+.dashboard-section h4 {
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.learning-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 15px;
+}
+
+.learning-card {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+}
+
+.activity-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.action-buttons a {
+  padding: 10px 18px;
+  background: #0d6efd;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.action-buttons a:hover {
+  background: #0b5ed7;
+}
+/* Login button hover */
+.navbar .btn-primary {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.navbar .btn-primary:hover {
+    background-color: #0baed7;   /* darker blue */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(62, 88, 234, 0.35);
+}
+/* Logout button hover */
+.navbar .btn-outline-light {
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #ffffff;
+    color: #000;
+    transform: translateY(-2px);
+}
+/* Navbar links */
+.navbar .nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* Hover color */
+.navbar .nav-link:hover {
+    color: #0d6efd;
+}
+
+/* Underline animation */
+.navbar .nav-link::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #0d6efd;
+    left: 0;
+    bottom: -4px;
+    transition: width 0.3s ease;
+}
+
+.navbar .nav-link:hover::after,
+.navbar .nav-link.active::after {
+    width: 100%;
+}
+/* ================= LOGIN PAGE ONLY ================= */
+
+.login-page {
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: #f5f7fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-/* Auth container */
+/* Login container */
 .auth-container {
     background: #ffffff;
     padding: 40px 30px;
@@ -168,7 +417,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Inputs and selects */
+/* Inputs & selects */
 .auth-container input,
 .auth-container select {
     width: 100%;
@@ -185,8 +434,8 @@ body {
     color: #999;
 }
 
-/* Buttons */
-.btn-primary {
+/* Login button */
+.auth-container .btn-primary {
     width: 100%;
     padding: 14px;
     margin-top: 15px;
@@ -200,7 +449,7 @@ body {
     transition: background 0.3s ease, transform 0.2s ease;
 }
 
-.btn-primary:hover {
+.auth-container .btn-primary:hover {
     background: linear-gradient(90deg, #5a4dbf, #00a4b0);
     transform: translateY(-2px);
 }
@@ -223,109 +472,10 @@ body {
     text-decoration: underline;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 400px) {
     .auth-container {
         width: 90%;
         padding: 30px 20px;
     }
-}
-
-/* ===== Student Dashboard ===== */
-
-.dashboard-wrapper {
-    max-width: 1100px;
-    margin: auto;
-}
-
-.dashboard-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.dashboard-header h2 {
-    font-weight: 600;
-}
-
-.subtitle {
-    color: #555;
-    font-size: 15px;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    margin-bottom: 40px;
-}
-
-.stat-card {
-    background: white;
-    padding: 20px;
-    border-radius: 14px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-.progress {
-    background: #e9ecef;
-    height: 8px;
-    border-radius: 6px;
-    margin-top: 10px;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #4CAF50;
-    border-radius: 6px;
-}
-
-.dashboard-section {
-    margin-bottom: 35px;
-}
-
-.dashboard-section h4 {
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.learning-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    gap: 15px;
-}
-
-.learning-card {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: 500;
-}
-
-.activity-list {
-    list-style: none;
-    padding: 0;
-}
-
-.activity-list li {
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 15px;
-}
-.action-buttons a {
-    padding: 10px 18px;
-    background: #0d6efd;
-    color: white;
-    border-radius: 6px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.action-buttons a:hover {
-    background: #0b5ed7;
 }

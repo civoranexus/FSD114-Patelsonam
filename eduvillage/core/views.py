@@ -5,7 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse
 from .forms import UserForm, EditProfileForm, RegisterForm
-from .models import UserProfile, Course, Enrollment,Grade
+from .models import UserProfile, Course, Assignment, Event, Enrollment, Grade
+
 from datetime import date, timedelta
 from .models import StudyTask
 
@@ -319,5 +320,36 @@ def weekly_planner(request):
 
     return render(request, 'core/weekly_planner.html', {'tasks': tasks})
 
+def dashboard(request):
+    return render(request, 'dashboard.html')
 
 
+@login_required
+def dashboard_instructor(request):
+    context = {
+        'total_courses': 3,
+        'total_students': 50,
+        'pending_assignments': 5,
+        'notifications_count': 2,
+        'courses': [],
+        'events': [],
+    }
+    return render(request, 'core/dashboard_instructor.html', context)
+
+
+def notifications(request):
+    # You can fetch real notifications later
+    notifications_list = [
+        {'message': 'New assignment submitted', 'date': '2026-01-31'},
+        {'message': 'Course update available', 'date': '2026-01-30'},
+    ]
+    return render(request, 'core/notifications.html', {'notifications': notifications_list})
+
+@login_required
+def calendar_view(request):
+    # Example events
+    events = [
+        {'title': 'Math Class', 'start_date': '2026-02-01', 'end_date': '2026-02-01', 'url': '#'},
+        {'title': 'Physics Assignment Due', 'start_date': '2026-02-03', 'end_date': '2026-02-03', 'url': '#'},
+    ]
+    return render(request, 'core/calendar.html', {'events': events})

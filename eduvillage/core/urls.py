@@ -10,12 +10,14 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', home, name='home'),
+    path('dashboard/', views.dashboard, name='dashboard'),
     path('study-planner/', views.study_planner, name='study_planner'),
     path('about/', about, name='about'),
     path('login/', UserLoginView.as_view(), name='login'),
     path('signup/', signup, name='signup'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('profile/', views.profile, name='profile'),
+    path('notifications/', views.notifications, name='notifications'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('my-courses/', views.my_courses, name='my_courses'),
     path(
@@ -43,7 +45,7 @@ urlpatterns = [
    path('study-planner/delete/<int:task_id>/', views.delete_task, name='delete_task'),
    path('weekly-planner/', views.weekly_planner, name='weekly_planner'),
    path('grades/', views.grades, name='grades'),
-
+   path('calendar/', views.calendar_view, name='calendar'), 
 
 
 ]

@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Village(models.Model):
     name = models.CharField(max_length=100)
     district = models.CharField(max_length=100)
@@ -63,6 +64,26 @@ class StudyTask(models.Model):
     def __str__(self):
         return f"{self.subject} - {self.topic}"
 
+class Event(models.Model):
+    instructor = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField(null=True, blank=True)
+    url = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+    
+
+class Assignment(models.Model):
+    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    due_date = models.DateTimeField()
+    status = models.CharField(max_length=20, default='pending')  # pending, submitted, graded
+
+    def __str__(self):
+        return f"{self.title} ({self.course.name})"
 
 # Auto-create Profile when User is created
 @receiver(post_save, sender=User)
