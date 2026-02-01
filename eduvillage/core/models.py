@@ -19,7 +19,7 @@ class UserProfile(models.Model):
     phone = models.CharField(max_length=15, blank=True)
     role = models.CharField(max_length=20, default='student')
 
-def __str__(self):
+    def __str__(self):
         return self.user.username
 
 
@@ -84,12 +84,15 @@ class Assignment(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.course.name})"
+    
+
 
 # Auto-create Profile when User is created
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        UserProfile.objects.create(user=instance) 
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

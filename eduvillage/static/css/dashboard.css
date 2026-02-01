@@ -350,19 +350,30 @@ body {
 
 /* Course cards */
 .course-card {
-  border-radius: 12px;
-  background-color: #2a2a3c;
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.2s, box-shadow 0.2s;
+    background: #1f2235;      /* dark card */
+    border-radius: 16px;
+    padding: 24px;
+    min-height: 180px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
 }
 
 .course-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 20px rgba(0, 123, 255, 0.7);
+    transform: translateY(-5px);
+}
+.course-card .btn {
+    background: linear-gradient(135deg, #0d6efd, #00c6ff);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 14px;
 }
 
-/* Quick action buttons */
+.course-card .btn:hover {
+    opacity: 0.9;
+}
+
 .action-btn {
   font-weight: 600;
   padding: 10px;

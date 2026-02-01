@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse
 from .forms import UserForm, EditProfileForm, RegisterForm
-from .models import UserProfile, Course, Assignment, Event, Enrollment, Grade
+from .models import UserProfile, Course, Assignment, Event, Enrollment
 
 from datetime import date, timedelta
 from .models import StudyTask
@@ -14,7 +14,7 @@ from .models import StudyTask
 @login_required
 def edit_profile(request):
     user = request.user
-    profile, created = UserProfile.objects.get_or_create(user=user)
+    profile, created = Profile.objects.get_or_create(user=user)
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
@@ -74,14 +74,6 @@ def dashboard_student(request):
         {'type': 'Fee', 'message': 'Tuition fee due on 2026-02-10'},
     ]
 
-    # Dummy Grade
-    grades = [
-        {
-            'course': 'Computer Science',
-            'score': 88,
-            'grade': 'A'
-        }
-    ]
     study_tasks = StudyTask.objects.filter(
         user=request.user
     ).order_by('study_date')[:5]
@@ -94,7 +86,7 @@ def dashboard_student(request):
     context = {
         'profile': profile,
         'notices': notices,
-        'grades': grades,
+
         'enrollments': enrollments,
         'study_tasks': study_tasks,
         'today_tasks': today_tasks,
@@ -114,7 +106,7 @@ def dashboard_instructor(request):
     total_courses = courses.count()
     total_students = Enrollment.objects.filter(course__in=courses).count()
 
-    context = {'profile': profile, 'total_courses': total_courses, 'total_students': total_students}
+    context = {'profile': profile,'user': request.user,'total_courses': total_courses, 'total_students': total_students}
     return render(request, 'core/dashboard_instructor.html', context)
 
 
@@ -145,7 +137,7 @@ class UserLoginView(LoginView):
     template_name = 'core/login.html'
 
     def get_success_url(self):
-        profile = UserProfile.objects.get(user=self.request.user)
+        profile =  UserProfile.objects.get(user=self.request.user)
 
         if profile.role == 'student':
             return reverse('dashboard_student')
@@ -184,13 +176,29 @@ def profile(request):
 
 
 # My courses page
+
 @login_required
 def my_courses(request):
-    enrollments = Enrollment.objects.filter(user=request.user).select_related('course')
 
-    return render(request, 'core/my_courses.html', {
-        'enrollments': enrollments
-    })
+   # Dummy courses data
+    courses = [
+        {"name": "Cybersecurity Essentials", "subject": "Cybersecurity", "student_count": 25},
+        {"name": "Data Science 101", "subject": "Data Science", "student_count": 30},
+        {"name": "Machine Learning A-Z", "subject": "Machine Learning", "student_count": 28},
+        {"name": "Python Programming", "subject": "Programming", "student_count": 32},
+        {"name": "Web Development with Django", "subject": "Web Development", "student_count": 20},
+        {"name": "Artificial Intelligence", "subject": "AI", "student_count": 18},
+        {"name": "Database Systems", "subject": "Databases", "student_count": 22},
+        {"name": "Cloud Computing Basics", "subject": "Cloud Computing", "student_count": 15},
+        {"name": "UI/UX Design", "subject": "Design", "student_count": 17},
+        {"name": "Blockchain Fundamentals", "subject": "Blockchain", "student_count": 12},
+    ]
+
+    context = {
+        "courses": courses
+    }
+    return render(request, "core/my_courses.html", context)
+
 
 # Register new user
 def register(request):
@@ -266,15 +274,9 @@ def grades(request):
 def attendance(request):
     return render(request, 'core/attendance.html')
 
-
-# AI Tutor page
-@login_required
-def ai_tutor(request):
-    return render(request, 'core/ai_tutor.html')
-
 @login_required
 def grades(request):
-    profile, created = UserProfile.objects.get_or_create(user=request.user)
+    profile, created = Profile.objects.get_or_create(user=request.user)
 
     if profile.role != 'student':
         return redirect('login')
