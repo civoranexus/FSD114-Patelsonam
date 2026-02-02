@@ -1,67 +1,43 @@
-{% extends 'core/base_instructor.html' %}
+{% extends 'core/base.html' %}
+{% load static %}
 
 {% block content %}
-<style>
-/* Card styling - Soft Light Theme */
-.course-card {
-    background: #98b2ec; /* Pure white */
-    color: #1f2937; /* Dark gray text for contrast */
-    border-radius: 16px;
-    border: none;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Soft subtle shadow */
-}
-
-/* Glow effect */
-.glow-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.glow-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(96, 165, 250, 0.4); /* Soft blue glow */
-}
-
-/* Buttons - Soft pastel gradient */
-.glow-btn {
-    background: linear-gradient(135deg, #a5a327, #fdfdfd); /* Sky blue gradient */
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 13px;
-    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); /* subtle button shadow */
-}
-
-.glow-btn:hover {
-    background: linear-gradient(135deg, #3b83f600, #8eb5c7); /* Slightly darker on hover */
-    color: #ffffff;
-}
-</style>
-
-
 <div class="container mt-4">
+
     <h3 class="mb-4">My Courses</h3>
-    <div class="row g-4">
-        {% for course in courses %}
-        <div class="col-md-4">
-            <div class="card course-card glow-card h-100">
-                <div class="card-body">
-                    <h5 class="mb-1">{{ course.name }}</h5>
-                    <p class="course-subject">Subject: {{ course.subject }}</p>
-                    <p class="student-count">Students: {{ course.student_count }}</p>
-                    <div class="d-flex gap-2">
-                        <a href="#" class="btn btn-sm glow-btn">View</a>
-                        <a href="#" class="btn btn-sm glow-btn">Attendance</a>
-                        <a href="#" class="btn btn-sm glow-btn">Assignments</a>
+
+    {% if enrollments %}
+        <div class="row">
+            {% for enrollment in enrollments %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ enrollment.course.title }}
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                {{ enrollment.course.description|truncatewords:20 }}
+                            </p>
+
+                            <p class="mb-1">
+                                <strong>Instructor:</strong>
+                                {{ enrollment.course.created_by.get_full_name }}
+                            </p>
+
+                            <a href="#" class="btn btn-sm btn-outline-primary mt-2">
+                                View Course
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-        {% empty %}
-        <p>No courses assigned.</p>
-        {% endfor %}
+    {% else %}
+        <div class="alert alert-info">
+            You are not enrolled in any courses yet.
+        </div>
+    {% endif %}
 
-    </div>
 </div>
-
 {% endblock %}

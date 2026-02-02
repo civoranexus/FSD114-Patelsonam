@@ -6,7 +6,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse
 from .forms import UserForm, EditProfileForm, RegisterForm
 from .models import UserProfile, Course, Assignment, Event, Enrollment
-
+import json
 from datetime import date, timedelta
 from .models import StudyTask
 
@@ -176,28 +176,20 @@ def profile(request):
 
 
 # My courses page
-
 @login_required
-def my_courses(request):
+def instructor_my_courses(request):
 
-   # Dummy courses data
     courses = [
         {"name": "Cybersecurity Essentials", "subject": "Cybersecurity", "student_count": 25},
         {"name": "Data Science 101", "subject": "Data Science", "student_count": 30},
         {"name": "Machine Learning A-Z", "subject": "Machine Learning", "student_count": 28},
-        {"name": "Python Programming", "subject": "Programming", "student_count": 32},
-        {"name": "Web Development with Django", "subject": "Web Development", "student_count": 20},
-        {"name": "Artificial Intelligence", "subject": "AI", "student_count": 18},
-        {"name": "Database Systems", "subject": "Databases", "student_count": 22},
-        {"name": "Cloud Computing Basics", "subject": "Cloud Computing", "student_count": 15},
-        {"name": "UI/UX Design", "subject": "Design", "student_count": 17},
-        {"name": "Blockchain Fundamentals", "subject": "Blockchain", "student_count": 12},
     ]
 
-    context = {
-        "courses": courses
-    }
-    return render(request, "core/my_courses.html", context)
+    return render(
+        request,
+        "core/instructor_my_courses.html",
+        {"courses": courses}
+    )
 
 
 # Register new user
@@ -348,10 +340,97 @@ def notifications(request):
     return render(request, 'core/notifications.html', {'notifications': notifications_list})
 
 @login_required
-def calendar_view(request):
-    # Example events
-    events = [
-        {'title': 'Math Class', 'start_date': '2026-02-01', 'end_date': '2026-02-01', 'url': '#'},
-        {'title': 'Physics Assignment Due', 'start_date': '2026-02-03', 'end_date': '2026-02-03', 'url': '#'},
+
+@login_required
+
+@login_required
+def instructor_calendar(request):
+    lectures = Event.objects.filter(instructor=request.user)
+    assignments = Assignment.objects.filter(course__created_by=request.user)
+
+    events = []
+
+    # Classes / Lectures
+    for lec in lectures:
+        events.append({
+            "title": lec.title,
+            "start": lec.start_date.isoformat(),
+            "end": lec.end_date.isoformat() if lec.end_date else lec.start_date.isoformat(),
+            "type": "class",
+        })
+
+    # Assignments
+    for assn in assignments:
+        events.append({
+            "title": f"{assn.course.title} - {assn.title}",
+            "start": assn.due_date.isoformat(),
+            "type": "assignment",
+        })
+
+    # ✅ Demo fallback (VERY IMPORTANT)
+    if not events:
+        events = [
+            {
+                "title": "Demo Class",
+                "start": "2026-02-02",
+                "type": "class",
+            },
+            {
+                "title": "Demo Assignment",
+                "start": "2026-02-05",
+                "type": "assignment",
+            }
+        ]
+
+    return render(request, "core/calendar.html", {
+        "events": json.dumps(events)   # MUST be json.dumps
+    })
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .models import Enrollment, UserProfile
+
+@login_required
+def student_attendance(request):
+
+    courses = [
+        "Cybersecurity Essentials",
+        "Data Science 101",
+        "Machine Learning A-Z",
     ]
-    return render(request, 'core/calendar.html', {'events': events})
+
+    students = [
+        {"name": "Aarav Patel", "roll": "CS01"},
+        {"name": "Neha Sharma", "roll": "CS02"},
+        {"name": "Rahul Verma", "roll": "CS03"},
+        {"name": "Priya Singh", "roll": "CS04"},
+    ]
+
+    return render(
+        request,
+        "core/student_attendance.html",
+        {
+            "courses": courses,
+            "students": students,
+        }
+    )
+
+
+
+@login_required
+def student_my_courses(request):
+    # Get user profile
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    # Allow only students
+    if profile.role != 'student':
+        return redirect('login')
+
+    # Get enrolled courses for student
+    enrollments = Enrollment.objects.filter(user=request.user)
+
+    context = {
+        'profile': profile,
+        'enrollments': enrollments,
+    }
+
+    return render(request, 'core/my_courses.html', context)

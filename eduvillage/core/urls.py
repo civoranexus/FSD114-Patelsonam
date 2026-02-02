@@ -19,7 +19,8 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('notifications/', views.notifications, name='notifications'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
-    path('my-courses/', views.my_courses, name='my_courses'),
+    path('student/my-courses/', views.student_my_courses, name='student_my_courses'),
+
     path(
     'password-change/',
     auth_views.PasswordChangeView.as_view(
@@ -44,9 +45,10 @@ urlpatterns = [
    path('study-planner/edit/<int:task_id>/', views.edit_task, name='edit_task'),
    path('study-planner/delete/<int:task_id>/', views.delete_task, name='delete_task'),
    path('weekly-planner/', views.weekly_planner, name='weekly_planner'),
-   path('grades/', views.grades, name='grades'),
-   path('calendar/', views.calendar_view, name='calendar'), 
-
+   path('grades/', views.grades, name='grades'), 
+   path('instructor/my-courses/', views.instructor_my_courses, name='instructor_my_courses'),
+   path('student/my-courses/', views.student_my_courses, name='student_my_courses'),
+   path('calendar/', views.instructor_calendar, name='calendar'),
 
 ]
 if settings.DEBUG:

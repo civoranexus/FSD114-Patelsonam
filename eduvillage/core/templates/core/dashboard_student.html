@@ -22,7 +22,7 @@
             <h4>Main Menu</h4>
             <ul>
                 <li class="active"><a href="{% url 'dashboard_student' %}">Dashboard</a></li>
-                <li><a href="{% url 'my_courses' %}">My Courses ({{ enrollments.count }})</a></li>
+                <li><a href="{% url 'student_my_courses' %}">My Courses ({{ enrollments.count }})</a></li>
                 <li><a href="{% url 'assignments' %}">Assignments</a></li>
                 <li><a href="{% url 'attendance' %}">Attendance</a></li>
                 <li><a href="{% url 'study_planner' %}">Study Planner</a></li>

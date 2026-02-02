@@ -145,7 +145,7 @@ body {
         <div class="card-body">
           <h5 class="card-title">Courses</h5>
           <p class="card-text">{{ total_courses }}</p>
-          <a href="{% url 'my_courses' %}" class="btn btn-sm glow-btn">View Courses</a>
+          <a href="{% url 'instructor_my_courses' %}" class="btn btn-sm glow-btn">View Courses</a>
         </div>
       </div>
     </div>
@@ -195,24 +195,6 @@ body {
     </div>
   </div>
 
-  <!-- My Courses Section -->
-  <h4 class="mb-3">My Courses</h4>
-  <div class="row mb-4 g-3">
-    {% for course in courses %}
-    <div class="col-md-4">
-      <div class="card course-card glow-card">
-        <div class="card-body">
-          <h5 class="card-title">{{ course.name }}</h5>
-          <p class="card-text">Students: {{ course.student_count }}</p>
-          <p class="card-text">Next Class: {{ course.next_class|date:"d M, Y H:i" }}</p>
-          <a href="{% url 'course_detail' course.id %}" class="btn btn-sm glow-btn">View Details</a>
-        </div>
-      </div>
-    </div>
-    {% empty %}
-    <p>No courses assigned yet.</p>
-    {% endfor %}
-  </div>
 
   <!-- Calendar Section -->
   <h4>Upcoming Classes & Deadlines</h4>
