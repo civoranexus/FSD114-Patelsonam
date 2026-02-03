@@ -378,3 +378,41 @@ body {
   font-weight: 600;
   padding: 10px;
 }
+.calendar-table td {
+    height: 140px;
+    vertical-align: top;
+    padding: 6px;
+    position: relative;
+    font-size: 13px;
+}
+
+.date-number {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.today-cell {
+    border: 2px solid #0d6efd !important;
+    background: #eef6ff;
+}
+
+/* Event styles */
+.event {
+    padding: 4px 6px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    color: #fff;
+    font-size: 12px;
+}
+
+.event.class {
+    background: #0d6efd;
+}
+
+.event.assignment {
+    background: #dc3545;
+}
+
+.event.exam {
+    background: #198754;
+}

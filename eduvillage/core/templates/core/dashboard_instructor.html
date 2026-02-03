@@ -179,26 +179,83 @@ body {
   </div>
 
   <!-- Quick Actions -->
-  <h5 class="mb-3">Quick Actions</h5>
-  <div class="row mb-4 g-3">
-    <div class="col-md-3">
-      <button class="btn action-btn glow-btn w-100">Add Assignment</button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn action-btn glow-btn w-100">Schedule Class</button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn action-btn glow-btn w-100">Send Announcement</button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn action-btn glow-btn w-100">Mark Attendance</button>
-    </div>
+  <!-- Quick Actions -->
+<h5 class="mb-3">Quick Actions</h5>
+
+<div class="row mb-4 g-3">
+
+<div class="col-md-3">
+<a href="{% url 'assignments' %}" class="btn action-btn glow-btn w-100">
+Add Assignment
+</a>
+</div>
+
+<div class="col-md-3">
+<a href="{% url 'instructor_calendar' %}" class="btn action-btn glow-btn w-100">
+Schedule Class
+</a>
+</div>
+
+<div class="col-md-3">
+<a href="{% url 'notifications' %}" class="btn action-btn glow-btn w-100">
+Send Announcement
+</a>
+</div>
+
+<div class="col-md-3">
+<a href="{% url 'student_attendance' %}" class="btn action-btn glow-btn w-100">
+Mark Attendance
+</a>
+</div>
+
+</div>
+
   </div>
+<h4>My Courses</h4>
+<div class="row g-3 mb-4">
+    {% for course in courses_list %}
+    <div class="col-md-4">
+        <div class="card course-card p-3 glow-card text-center">
+            <h5>{{ course.name }}</h5>
+            <p>Students Enrolled: {{ course.student_count }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
 
   <!-- Calendar Section -->
-  <h4>Upcoming Classes & Deadlines</h4>
-  <div id="calendar"></div>
+
+  <div class="card shadow p-3 mt-3">
+
+<h5 class="mb-3">Upcoming Classes & Deadlines</h5>
+
+{% if events %}
+
+<ul class="list-group">
+
+{% for event in events %}
+
+<li class="list-group-item d-flex justify-content-between">
+
+<span>{{ event.title }}</span>
+
+<small>{{ event.start_date }}</small>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No upcoming events.</p>
+
+{% endif %}
+
+</div>
+
 
 </div>
 

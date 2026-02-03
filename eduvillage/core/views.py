@@ -1,4 +1,7 @@
+from asyncio import events
+from urllib import request
 from django.shortcuts import render, redirect,redirect,get_object_or_404
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
@@ -94,21 +97,84 @@ def dashboard_student(request):
 
     return render(request, 'core/dashboard_student.html', context)
 
-# Instructor dashboard
+
 @login_required
 def dashboard_instructor(request):
     profile, created = UserProfile.objects.get_or_create(user=request.user)
 
+    # Allow only instructors
     if profile.role != 'instructor':
         return redirect('login')
 
-    courses = Course.objects.filter(created_by=request.user)
-    total_courses = courses.count()
-    total_students = Enrollment.objects.filter(course__in=courses).count()
+    # -------- COURSES & STUDENTS --------
+    courses_qs = Course.objects.filter(created_by=request.user)
 
-    context = {'profile': profile,'user': request.user,'total_courses': total_courses, 'total_students': total_students}
-    return render(request, 'core/dashboard_instructor.html', context)
+    if courses_qs.exists():
+        total_courses = courses_qs.count()
+        total_students = Enrollment.objects.filter(course__in=courses_qs).count()
 
+        courses_list = []
+        for course in courses_qs:
+            courses_list.append({
+                "name": course.name,
+                "student_count": Enrollment.objects.filter(course=course).count()
+            })
+
+    else:
+        # Fake fallback
+        total_courses = 3
+        total_students = 100
+
+        courses_list = [
+            {"name": "Python Programming", "student_count": 32},
+            {"name": "AI & ML", "student_count": 28},
+            {"name": "Web Development", "student_count": 40},
+        ]
+
+    # -------- ASSIGNMENTS --------
+    pending_assignments = 5
+
+    # -------- CALENDAR EVENTS --------
+    calendar_events = [
+        {"title": "Python Class", "start_date": "2026-02-05", "end_date": "2026-02-05", "url": "#"},
+        {"title": "AI Assignment Due", "start_date": "2026-02-08", "end_date": "2026-02-08", "url": "#"},
+        {"title": "Web Dev Class", "start_date": "2026-02-10", "end_date": "2026-02-10", "url": "#"},
+        {"title": "Python Quiz", "start_date": "2026-02-12", "end_date": "2026-02-12", "url": "#"},
+    ]
+
+    # -------- NOTIFICATIONS --------
+    notifications = [
+        "New student enrolled in Python",
+        "AI & ML assignment submitted",
+        "Web Dev class scheduled tomorrow",
+    ]
+
+    # Add upcoming events as notifications
+    today = date.today()
+    next_week = today + timedelta(days=7)
+
+    for e in calendar_events:
+        event_date = date.fromisoformat(e["start_date"])
+        if today <= event_date <= next_week:
+            notifications.append(
+                f"{e['title']} on {event_date.strftime('%d %b %Y')}"
+            )
+
+    notifications_count = len(notifications)
+
+    context = {
+        "profile": profile,
+        "user": request.user,
+        "total_courses": total_courses,
+        "total_students": total_students,
+        "pending_assignments": pending_assignments,
+        "notifications_count": notifications_count,
+        "notifications": notifications,
+        "events": calendar_events,
+        "courses_list": courses_list,
+    }
+
+    return render(request, "core/dashboard_instructor.html", context)
 
 # Admin dashboard
 @login_required
@@ -318,73 +384,77 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 
-@login_required
-def dashboard_instructor(request):
-    context = {
-        'total_courses': 3,
-        'total_students': 50,
-        'pending_assignments': 5,
-        'notifications_count': 2,
-        'courses': [],
-        'events': [],
-    }
-    return render(request, 'core/dashboard_instructor.html', context)
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from datetime import date, timedelta
 
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from datetime import date, timedelta
 
-def notifications(request):
-    # You can fetch real notifications later
-    notifications_list = [
-        {'message': 'New assignment submitted', 'date': '2026-01-31'},
-        {'message': 'Course update available', 'date': '2026-01-30'},
-    ]
-    return render(request, 'core/notifications.html', {'notifications': notifications_list})
-
-@login_required
-
-@login_required
 
 @login_required
 def instructor_calendar(request):
-    lectures = Event.objects.filter(instructor=request.user)
-    assignments = Assignment.objects.filter(course__created_by=request.user)
+    # Month navigation
+    year = int(request.GET.get("year", date.today().year))
+    month = int(request.GET.get("month", date.today().month))
 
-    events = []
+    first_day = date(year, month, 1)
+    start_day = first_day - timedelta(days=first_day.weekday())
+    today = date.today()
 
-    # Classes / Lectures
-    for lec in lectures:
-        events.append({
-            "title": lec.title,
-            "start": lec.start_date.isoformat(),
-            "end": lec.end_date.isoformat() if lec.end_date else lec.start_date.isoformat(),
-            "type": "class",
-        })
+    # 🔹 CENTRAL EVENT STORE (FAKE DATA – READY FOR DB)
+    calendar_events = [
+        {"title": "AI Class", "date": date(year, month, 3), "type": "class"},
+        {"title": "DBMS Class", "date": date(year, month, 5), "type": "class"},
+        {"title": "ML Assignment Due", "date": date(year, month, 10), "type": "assignment"},
+        {"title": "AI Unit Test", "date": date(year, month, 15), "type": "exam"},
+        {"title": "DBMS Mid Exam", "date": date(year, month, 20), "type": "exam"},
+        {"title": "ML Assignment Review", "date": date(year, month, 25), "type": "assignment"},
+    ]
 
-    # Assignments
-    for assn in assignments:
-        events.append({
-            "title": f"{assn.course.title} - {assn.title}",
-            "start": assn.due_date.isoformat(),
-            "type": "assignment",
-        })
+    # Build calendar days
+    days = []
+    for i in range(42):  # 6 weeks view
+        current = start_day + timedelta(days=i)
 
-    # ✅ Demo fallback (VERY IMPORTANT)
-    if not events:
-        events = [
-            {
-                "title": "Demo Class",
-                "start": "2026-02-02",
-                "type": "class",
-            },
-            {
-                "title": "Demo Assignment",
-                "start": "2026-02-05",
-                "type": "assignment",
-            }
+        calendar_events= [
+            e for e in calendar_events if e["date"] == current
         ]
 
-    return render(request, "core/calendar.html", {
-        "events": json.dumps(events)   # MUST be json.dumps
+        days.append({
+            "date": current,
+            "events": calendar_events,
+            "is_today": current == today,
+            "in_month": current.month == month
+        })
+
+    context = {
+        "days": days,
+        "month_year": first_day.strftime("%B %Y"),
+        "prev_month": (first_day - timedelta(days=1)),
+        "next_month": (first_day + timedelta(days=32)).replace(day=1),
+    }
+
+    return render(request, "core/calendar.html", context)
+
+
+@login_required
+def notifications(request):
+
+    notifications = [
+        "New student enrolled in Python",
+        "AI Assignment submitted",
+        "Web Dev class scheduled tomorrow",
+        "Python Quiz on 12 Feb",
+        "Project presentation on 18 Feb",
+    ]
+
+    return render(request, "core/notifications.html", {
+        "notifications": notifications
     })
+
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .models import Enrollment, UserProfile

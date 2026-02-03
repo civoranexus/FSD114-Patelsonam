@@ -29,9 +29,10 @@
 <div class="container-fluid">
   <div class="row">
 
+
     <!-- Sidebar -->
-    <aside class="col-md-3 sidebar d-none d-md-block">
-      <div class="list-group list-group-flush">
+    <aside class="col-md-3 col-lg-2 sidebar p-0">
+      <div class="list-group list-group-flush rounded-0">
         <a href="{% url 'dashboard_instructor' %}"
            class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'dashboard_instructor' %}active{% endif %}">
            Dashboard
@@ -59,14 +60,14 @@
       </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="col-md-9 p-4">
+    <!-- MAIN CONTENT -->
+    <main class="col-md-9 col-lg-10 px-4 py-4">
       {% block content %}{% endblock %}
     </main>
 
   </div>
 </div>
-{% block scripts %}{% endblock %}
 
+{% block extra_js %}{% endblock %}
 </body>
 </html>

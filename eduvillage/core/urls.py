@@ -5,6 +5,8 @@ from .views import home, about, dashboard_student, dashboard_instructor,dashboar
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from .views import instructor_calendar
+
 
 
 
@@ -49,7 +51,7 @@ urlpatterns = [
    path('instructor/my-courses/', views.instructor_my_courses, name='instructor_my_courses'),
    path('student/my-courses/', views.student_my_courses, name='student_my_courses'),
    path('calendar/', views.instructor_calendar, name='calendar'),
-
+   path("instructor/calendar/", instructor_calendar, name="instructor_calendar"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

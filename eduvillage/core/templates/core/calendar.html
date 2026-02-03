@@ -1,31 +1,58 @@
-{% extends 'core/base_instructor.html' %}
+{% extends "core/base_instructor.html" %}
 
 {% block content %}
+<div class="container mt-4">
 
-<h3>Instructor Calendar</h3>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>📅 Instructor Calendar – {{ month_year }}</h3>
+        <div>
+            <a class="btn btn-outline-secondary btn-sm"
+               href="?month={{ prev_month.month }}&year={{ prev_month.year }}">◀</a>
+            <a class="btn btn-outline-secondary btn-sm"
+               href="?month={{ next_month.month }}&year={{ next_month.year }}">▶</a>
+        </div>
+    </div>
 
-<div id="calendar" style="height:700px;background:white;border-radius:10px;"></div>
+    <!-- Legend -->
+    <div class="mb-3">
+        <span class="badge bg-primary me-2">Class</span>
+        <span class="badge bg-danger me-2">Assignment</span>
+        <span class="badge bg-success me-2">Exam</span>
+    </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
+    <!-- Calendar -->
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-bordered calendar-table mb-0">
+                <thead class="table-light text-center">
+                    <tr>
+                        <th>Mon</th><th>Tue</th><th>Wed</th>
+                        <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for day in days %}
+                    {% if forloop.counter0|divisibleby:7 %}<tr>{% endif %}
 
-    var calendarEl = document.getElementById('calendar');
+                    <td class="
+                        {% if not day.in_month %}bg-light text-muted{% endif %}
+                        {% if day.is_today %}today-cell{% endif %}
+                    ">
+                        <div class="date-number">{{ day.date.day }}</div>
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        events: [
-            { title: 'Demo Class', start: '2026-02-02' },
-            { title: 'Demo Assignment', start: '2026-02-05' }
-        ]
-    });
+                        {% for event in day.events %}
+                            <div class="event {{ event.type }}">
+                                {{ event.title }}
+                            </div>
+                        {% endfor %}
+                    </td>
 
-    calendar.render();
-});
-</script>
-
+                    {% if forloop.counter|divisibleby:7 %}</tr>{% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}
