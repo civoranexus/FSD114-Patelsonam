@@ -52,6 +52,14 @@ urlpatterns = [
    path('student/my-courses/', views.student_my_courses, name='student_my_courses'),
    path('calendar/', views.instructor_calendar, name='calendar'),
    path("instructor/calendar/", instructor_calendar, name="instructor_calendar"),
+   path('my-courses/', views.my_courses, name='my_courses'),
+   path('courses/<int:course_id>/', views.course_detail, name='course_detail'),
+   path('enroll/<int:course_id>/', views.enroll_course, name='enroll_course'),
+   path(
+        'logout/',
+        LogoutView.as_view(next_page='home'),  # or 'login'
+        name='logout'
+    ),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -406,3 +406,18 @@ p {
     transform: translateY(-1px);
     box-shadow: 0 8px 18px rgba(59, 130, 246, 0.3);
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #f0fdf4;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}

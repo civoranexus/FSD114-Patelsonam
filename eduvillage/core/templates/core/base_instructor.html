@@ -2,72 +2,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instructor | EduVillage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Instructor | EduVillage{% endblock %}</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Optional Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
-  <!-- FullCalendar -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
-
-  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-
+    {% block extra_head %}{% endblock %}
+</head>
 <body>
 
-<!-- Top Bar -->
-<div class="container-fluid bg-light px-4 py-2 d-flex justify-content-between align-items-center">
-  <h4 class="mb-0">EduVillage – Instructor</h4>
-  <div>
-    <a href="{% url 'notifications' %}" class="btn btn-outline-primary btn-sm">Notifications</a>
-    <a href="{% url 'profile' %}" class="btn btn-outline-secondary btn-sm">Profile</a>
-    <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Logout</a>
-  </div>
-</div>
+<!-- Top Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'dashboard_instructor' %}">EduVillage</a>
+        <div class="d-flex align-items-center">
+            <a href="{% url 'notifications' %}" class="btn btn-outline-primary btn-sm me-2">Notifications</a>
+            <a href="{% url 'profile' %}" class="btn btn-outline-secondary btn-sm me-2">Profile</a>
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
 
 <div class="container-fluid">
-  <div class="row">
+    <div class="row">
 
+        <!-- Sidebar -->
+        <aside class="col-md-3 col-lg-2 p-0 bg-light vh-100 position-fixed sidebar">
+            <div class="list-group list-group-flush rounded-0">
+                <a href="{% url 'dashboard_instructor' %}" 
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'dashboard_instructor' %}active{% endif %}">
+                   Dashboard
+                </a>
+                <a href="{% url 'instructor_my_courses' %}" 
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'my_courses' %}active{% endif %}">
+                   My Courses
+                </a>
+                <a href="{% url 'student_attendance' %}" 
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'student_attendance' %}active{% endif %}">
+                   Student Attendance
+                </a>
+                <a href="{% url 'assignments' %}" 
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'assignments' %}active{% endif %}">
+                   Tests & Assignments
+                </a>
+                <a href="{% url 'calendar' %}" 
+                   class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'calendar' %}active{% endif %}">
+                   Calendar
+                </a>
+            </div>
+        </aside>
 
-    <!-- Sidebar -->
-    <aside class="col-md-3 col-lg-2 sidebar p-0">
-      <div class="list-group list-group-flush rounded-0">
-        <a href="{% url 'dashboard_instructor' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'dashboard_instructor' %}active{% endif %}">
-           Dashboard
-        </a>
+        <!-- Main content -->
+        <main class="col-md-9 col-lg-10 offset-md-3 offset-lg-2 px-4 py-4">
+            {% block content %}{% endblock %}
+        </main>
 
-        <a href="{% url 'instructor_my_courses' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'my_courses' %}active{% endif %}">
-           My Courses
-        </a>
-
-        <a href="{% url 'student_attendance' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'student_attendance' %}active{% endif %}">
-           Student Attendance
-        </a>
-
-        <a href="{% url 'assignments' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'assignments' %}active{% endif %}">
-           Tests & Assignments
-        </a>
-
-        <a href="{% url 'calendar' %}"
-           class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'calendar' %}active{% endif %}">
-           Calendar
-        </a>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="col-md-9 col-lg-10 px-4 py-4">
-      {% block content %}{% endblock %}
-    </main>
-
-  </div>
+    </div>
 </div>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 {% block extra_js %}{% endblock %}
+
 </body>
 </html>

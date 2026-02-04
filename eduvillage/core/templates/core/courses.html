@@ -9,132 +9,28 @@
     </p>
 
    <div class="row">
+  {% for course in courses %}
+  <div class="col-md-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ course.title }}</h5>
+        <p class="card-text">{{ course.description|truncatewords:20 }}</p>
 
-    <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>Python Programming</h5>
-        <p class="text-muted">
-          Learn Python fundamentals, OOP, and real-world applications.
-        </p>
-          <ul>
-                <li>Duration: 3 Months</li>
-                <li>Level: Beginner</li>
-                <li>Hands-on Practice</li>
-            </ul>
-       <a href="{% url 'enroll_course' 1 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
+        <ul class="list-unstyled small">
+          <li>⏱ Duration: {{ course.duration }}</li>
+          <li>🎯 Level: {{ course.level }}</li>
+        </ul>
+
+        <!-- IMPORTANT CHANGE -->
+        <a href="{% url 'course_detail' course.id %}"
+           class="btn btn-primary w-100">
+          View Details
+        </a>
       </div>
     </div>
+  </div>
+  {% endfor %}
 
-       <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>Full Stack Development</h5>
-        <p class="text-muted">
-          Build modern web applications using Django and frontend tools.
-        </p>
-        <ul>
-                <li>Duration: 6 Months</li>
-                <li>Level: Beginner to Advanced </li>
-                <li>Capstone Project Included</li>
-            </ul>
-        <a href="{% url 'enroll_course' 2 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
-      </div>
-    </div>
-
-        <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>AI & Machine Learning</h5>
-        <p class="text-muted">
-          Understand AI concepts and implement ML models.
-        </p>
-         <ul>
-                <li>Duration: 5  Months</li>
-                <li>Level: Intermediate</li>
-                <li>Mini Projects Included</li>
-            </ul>
-        <a href="{% url 'enroll_course' 3 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
-      </div>
-    </div>
- 
-       <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>Data Science</h5>
-        <p class="text-muted">
-          Learn data analysis, visualization, statistics, and Python libraries like NumPy and Pandas.
-        </p>
-        <ul class="list-unstyled small mb-3">
-  <li>⏱ Duration: 4 Months</li>
-  <li>🎯 Level: Intermediate</li>
-  <li>🛠 Case Studies & Projects</li>
-</ul>
-
-       <a href="{% url 'enroll_course' 4 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
-      </div>
-    </div>
-
-        <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>Web Development</h5>
-        <p class="text-muted">
-          Build responsive websites using HTML, CSS, JavaScript, and backend integration.
-        </p>
-        <ul class="list-unstyled small mb-3">
-  <li>⏱ Duration: 3 Months</li>
-  <li>🎯 Level: Beginner</li>
-  <li>🛠 Live Website Projects</li>
-</ul>
-
-        <a href="{% url 'enroll_course' 5 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
-      </div>
-    </div>
-     <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>Cyber Security</h5>
-        <p class="text-muted">
-          Understand cyber threats, network security, ethical hacking, and security best practices.
-        </p>
-        <ul class="list-unstyled small mb-3">
-  <li>⏱ Duration: 4 Months</li>
-  <li>🎯 Level: Intermediate</li>
-  <li>🛠 Practical Labs Included</li>
-</ul>
-
-        <a href="{% url 'enroll_course' 6 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
-      </div>
-    </div>
-
-    <div class="col-md-4 mb-4">
-      <div class="card shadow h-100 p-3">
-        <h5>Cloud Computing</h5>
-        <p class="text-muted">
-          Learn cloud fundamentals, deployment models, and services using AWS and Azure.
-        </p> <ul class="list-unstyled small mb-3">
-  <li>⏱ Duration: 3 Months</li>
-  <li>🎯 Level: Beginner to Intermediate</li>
-  <li>🛠 Deployment Projects</li>
-</ul>
-
-        <a href="{% url 'enroll_course' 7 %}"
-   class="btn btn-primary w-100">
-   Enroll Now
-</a>
       </div>
     </div>
     </div>   <!-- ✅ closes row -->

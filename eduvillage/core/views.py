@@ -13,11 +13,12 @@ import json
 from datetime import date, timedelta
 from .models import StudyTask
 
+
 # Edit profile
 @login_required
 def edit_profile(request):
     user = request.user
-    profile, created = Profile.objects.get_or_create(user=user)
+    profile, created = UserProfile.objects.get_or_create(user=user)
 
     if request.method == 'POST':
         user_form = UserForm(request.POST, instance=user)
@@ -268,25 +269,34 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'core/register.html', {'form': form})
-
-
-# Courses page
-def courses(request):
-    return render(request, 'core/courses.html')
-
-
-# Contact page
 def contact(request):
     return render(request, 'core/contact.html')
 
+@login_required
+def course_detail(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
 
-# Enroll in course
+    already_enrolled = Enrollment.objects.filter(
+        user=request.user,
+        course=course
+    ).exists()
+
+    return render(request, 'core/course_detail.html', {
+        'course': course,
+        'already_enrolled': already_enrolled
+    })
+
+
 @login_required
 def enroll_course(request, course_id):
-    course = Course.objects.get(id=course_id)
-    Enrollment.objects.get_or_create(user=request.user, course=course)
-    return redirect('my_courses')
+    course = get_object_or_404(Course, id=course_id)
 
+    Enrollment.objects.get_or_create(
+        user=request.user,
+        course=course
+    )
+
+    return redirect('my_courses')
 
 # Study planner
 @login_required
@@ -428,9 +438,11 @@ def instructor_calendar(request):
             "is_today": current == today,
             "in_month": current.month == month
         })
+    # Split into weeks (6 lists of 7 days each)
+    weeks = [days[i:i + 7] for i in range(0, 42, 7)]
 
     context = {
-        "days": days,
+        "weeks": weeks,
         "month_year": first_day.strftime("%B %Y"),
         "prev_month": (first_day - timedelta(days=1)),
         "next_month": (first_day + timedelta(days=32)).replace(day=1),
@@ -504,3 +516,39 @@ def student_my_courses(request):
     }
 
     return render(request, 'core/my_courses.html', context)
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_courses(request):
+    courses = Course.objects.filter(
+        enrollment__student=request.user
+    )
+    return render(request, 'core/my_courses.html', {
+        'courses': courses
+    })
+@login_required
+def course_detail(request, course_id):
+    course = get_object_or_404(Course, id=course_id)
+
+    already_enrolled = Enrollment.objects.filter(
+        user=request.user,
+        course=course
+    ).exists()
+
+    return render(request, 'core/course_detail.html', {
+        'course': course,
+        'already_enrolled': already_enrolled
+    })
+def courses(request):
+    courses = Course.objects.all()
+
+    enrolled_courses = []
+    if request.user.is_authenticated:
+        enrolled_courses = Course.objects.filter(
+            enrollment__user=request.user
+        )
+
+    return render(request, 'core/courses.html', {
+        'courses': courses,
+        'enrolled_courses': enrolled_courses
+    })

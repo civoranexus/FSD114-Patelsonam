@@ -479,3 +479,76 @@ h1, h2, h3, h4, h5, h6, p, span, div {
         padding: 30px 20px;
     }
 }
+.btn-secondary {
+    cursor: pointer;
+    opacity: 0.9;
+}
+/* 🔐 Auth Pages */
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f4f6f9;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.auth-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+/* Form inputs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
+}
+
+/* ✅ REGISTER BUTTON */
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #0d6efd, #0047ff);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.auth-btn:hover {
+    background: linear-gradient(135deg, #0047ff, #0031b8);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(13,110,253,0.3);
+}

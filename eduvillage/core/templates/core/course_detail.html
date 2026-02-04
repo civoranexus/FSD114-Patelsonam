@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <div class="card shadow-lg p-4">
+    <h2 class="mb-3">{{ course.title }}</h2>
+
+    <p class="text-muted">{{ course.description }}</p>
+
+    <hr>
+
+    <p><strong>📘 Syllabus:</strong> {{ course.syllabus }}</p>
+    <p><strong>👨‍🏫 Instructor:</strong> {{ course.instructor }}</p>
+    <p><strong>⏳ Duration:</strong> {{ course.duration }}</p>
+
+    <div class="mt-4">
+      {% if already_enrolled %}
+        <button class="btn btn-success" disabled>
+          ✅ Already Enrolled
+        </button>
+      {% else %}
+        <a href="{% url 'enroll_course' course.id %}"
+           class="btn btn-primary">
+          🚀 Enroll Now
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

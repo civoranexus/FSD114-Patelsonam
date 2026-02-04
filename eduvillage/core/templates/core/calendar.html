@@ -1,58 +1,58 @@
-{% extends "core/base_instructor.html" %}
+{% extends 'core/base_instructor.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-4">
+<div class="container-fluid mt-3">
 
-    <!-- Header -->
+    <!-- Month navigation -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3>📅 Instructor Calendar – {{ month_year }}</h3>
-        <div>
-            <a class="btn btn-outline-secondary btn-sm"
-               href="?month={{ prev_month.month }}&year={{ prev_month.year }}">◀</a>
-            <a class="btn btn-outline-secondary btn-sm"
-               href="?month={{ next_month.month }}&year={{ next_month.year }}">▶</a>
-        </div>
+        <a href="?month={{ prev_month.month }}&year={{ prev_month.year }}" class="btn btn-outline-primary">&laquo; Prev</a>
+        <h4>{{ month_year }}</h4>
+        <a href="?month={{ next_month.month }}&year={{ next_month.year }}" class="btn btn-outline-primary">Next &raquo;</a>
     </div>
 
-    <!-- Legend -->
-    <div class="mb-3">
-        <span class="badge bg-primary me-2">Class</span>
-        <span class="badge bg-danger me-2">Assignment</span>
-        <span class="badge bg-success me-2">Exam</span>
-    </div>
+    <!-- Calendar table -->
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in weeks %}
+            <tr>
+                {% for day in week %}
+                <td class="{% if not day.in_month %}bg-light text-muted{% endif %} {% if day.is_today %}border border-danger{% endif %}" style="height:100px; vertical-align:top;">
+                    <!-- Date -->
+                    <div><strong>{{ day.date.day }}</strong></div>
 
-    <!-- Calendar -->
-    <div class="card shadow-sm">
-        <div class="card-body p-0">
-            <table class="table table-bordered calendar-table mb-0">
-                <thead class="table-light text-center">
-                    <tr>
-                        <th>Mon</th><th>Tue</th><th>Wed</th>
-                        <th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for day in days %}
-                    {% if forloop.counter0|divisibleby:7 %}<tr>{% endif %}
-
-                    <td class="
-                        {% if not day.in_month %}bg-light text-muted{% endif %}
-                        {% if day.is_today %}today-cell{% endif %}
-                    ">
-                        <div class="date-number">{{ day.date.day }}</div>
-
+                    <!-- Events -->
+                    <ul class="list-unstyled small mt-1">
                         {% for event in day.events %}
-                            <div class="event {{ event.type }}">
-                                {{ event.title }}
-                            </div>
+                        <li>
+                            {% if event.type == 'class' %}
+                                <span class="badge bg-primary">{{ event.title }}</span>
+                            {% elif event.type == 'assignment' %}
+                                <span class="badge bg-warning text-dark">{{ event.title }}</span>
+                            {% elif event.type == 'exam' %}
+                                <span class="badge bg-danger">{{ event.title }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ event.title }}</span>
+                            {% endif %}
+                        </li>
                         {% endfor %}
-                    </td>
-
-                    {% if forloop.counter|divisibleby:7 %}</tr>{% endif %}
+                    </ul>
+                </td>
                 {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}
