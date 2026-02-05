@@ -1,0 +1,100 @@
+{% extends "adminpanel/dashboard_admin.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="fw-bold">Students Management</h3>
+    <button class="btn btn-primary">
+      <i class="bi bi-person-plus"></i> Add Student
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card shadow-sm text-center">
+        <div class="card-body">
+          <h6>Total Students</h6>
+          <h3 class="fw-bold">120</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm text-center">
+        <div class="card-body">
+          <h6>Active</h6>
+          <h3 class="fw-bold text-success">98</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card shadow-sm text-center">
+        <div class="card-body">
+          <h6>Inactive</h6>
+          <h3 class="fw-bold text-danger">22</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Students Table -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <table class="table table-hover align-middle">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Status</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Fake / Demo Data -->
+          <tr>
+            <td>1</td>
+            <td>Rahul Sharma</td>
+            <td>rahul@gmail.com</td>
+            <td>Python</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning">Edit</button>
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>2</td>
+            <td>Anjali Patel</td>
+            <td>anjali@gmail.com</td>
+            <td>Django</td>
+            <td><span class="badge bg-secondary">Inactive</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning">Edit</button>
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>3</td>
+            <td>Mohit Verma</td>
+            <td>mohit@gmail.com</td>
+            <td>Web Development</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning">Edit</button>
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

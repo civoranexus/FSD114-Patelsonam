@@ -1,0 +1,35 @@
+{% extends 'core/base_admin.html' %}
+
+{% block title %}Instructors | EduVillage Admin{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">👨‍🏫 Instructors</h2>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Department</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Dr. Rahul Sharma</td>
+            <td>rahul@eduvillage.com</td>
+            <td>Computer Science</td>
+            <td><span class="badge bg-success">Active</span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Prof. Anita Verma</td>
+            <td>anita@eduvillage.com</td>
+            <td>Mathematics</td>
+            <td><span class="badge bg-success">Active</span></td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

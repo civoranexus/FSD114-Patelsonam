@@ -1,0 +1,61 @@
+{% extends 'core/base_admin.html' %}
+
+{% block title %}Courses | EduVillage Admin{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📚 Courses Management</h2>
+
+<div class="mb-3 text-end">
+    <button class="btn btn-primary btn-sm">➕ Add New Course</button>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Instructor</th>
+            <th>Students Enrolled</th>
+            <th>Status</th>
+            <th width="180">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>101</td>
+            <td>Python Programming</td>
+            <td>Dr. Rahul Sharma</td>
+            <td>45</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>
+                <button class="btn btn-sm btn-warning">Edit</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>102</td>
+            <td>Web Development</td>
+            <td>Prof. Anita Verma</td>
+            <td>60</td>
+            <td><span class="badge bg-success">Active</span></td>
+            <td>
+                <button class="btn btn-sm btn-warning">Edit</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>103</td>
+            <td>Data Structures</td>
+            <td>Mr. Suresh Patel</td>
+            <td>38</td>
+            <td><span class="badge bg-secondary">Inactive</span></td>
+            <td>
+                <button class="btn btn-sm btn-warning">Edit</button>
+                <button class="btn btn-sm btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

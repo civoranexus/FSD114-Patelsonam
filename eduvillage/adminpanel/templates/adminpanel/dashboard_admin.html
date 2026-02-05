@@ -1,0 +1,49 @@
+{% extends 'core/base_admin.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">Admin Dashboard</h2>
+<p class="text-muted">System overview & controls</p>
+
+<div class="row g-4">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6>Total Students</h6>
+            <h3>{{ total_students }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6>Total Instructors</h6>
+            <h3>{{ total_instructors }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6>Total Courses</h6>
+            <h3>{{ total_courses }}</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6>Total Assignments</h6>
+            <h3>{{ total_assignments }}</h3>
+        </div>
+    </div>
+
+</div>
+
+<hr class="my-4">
+
+<h5>Quick Actions</h5>
+<div class="d-flex gap-3">
+    <a href="#" class="btn btn-primary">Add Course</a>
+    <a href="#" class="btn btn-secondary">Add Instructor</a>
+    <a href="#" class="btn btn-success">View Reports</a>
+</div>
+{% endblock %}
