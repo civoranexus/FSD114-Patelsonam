@@ -82,7 +82,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "eduvillage.wsgi.application"
+WSGI_APPLICATION = 'wsgi.application'
+
 
 
 # Database
