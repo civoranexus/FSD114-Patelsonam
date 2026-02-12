@@ -9,9 +9,9 @@ urlpatterns = [
     path('reports/', views.admin_reports, name='admin_reports'),
 
      # STUDENTS
-    path('students/', views.manage_students, name='admin_students'),
-    path('students/add/', views.add_student, name='add_student'),
-    path('students/delete/<int:index>/', views.delete_student, name='delete_student'),
-    path('students/edit/<int:index>/', views.edit_student, name='edit_student'),
-    path('students/status/<int:index>/', views.toggle_status, name='toggle_status'),
-]
+    path('dashboard_admin/', admin_dashboard, name='dashboard_admin'),
+    path('students/', manage_students, name='admin_students'),
+    path('instructors/', views.admin_instructors, name='admin_instructors'),
+    path('courses/', views.admin_courses, name='admin_courses'),
+    path('reports/', views.admin_reports, name='admin_reports'),
+    ]

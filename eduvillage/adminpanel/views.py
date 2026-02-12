@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Student
 
@@ -20,64 +20,49 @@ def admin_dashboard(request):
     }
     return render(request, 'adminpanel/dashboard_admin.html', context)
 
+
 def manage_students(request):
-    students = request.session.get('students', [])
+    students = Student.objects.all()
 
-    total = len(students)
-    active = sum(1 for s in students if s['status'] == 'Active')
-    inactive = total - active
-
-    return render(request, 'adminpanel/student_admin.html', {
+    context = {
         'students': students,
-        'total': total,
-        'active': active,
-        'inactive': inactive
-    })
+        'total_students': students.count(),
+        'active_students': students.filter(status='Active').count(),
+        'inactive_students': students.filter(status='Inactive').count(),
+    }
+    return render(request, 'adminpanel/student_admin.html', context)
+def student_list(request):
+    students = Student.objects.all()
 
-
+    total_students = students.count()
+    active_students = students.filter(status='Active').count()
+    inactive_students = students.filter(status='Inactive').count()
 def add_student(request):
     if request.method == 'POST':
-        students = request.session.get('students', [])
-        students.append({
-            'name': request.POST['name'],
-            'email': request.POST['email'],
-            'course': request.POST['course'],
-            'status': 'Active'
-        })
-        request.session['students'] = students
-    return redirect('admin_students')
-
-
-def delete_student(request, index):
-    students = request.session.get('students', [])
-    if index < len(students):
-        students.pop(index)
-        request.session['students'] = students
-    return redirect('admin_students')
-
-
-def edit_student(request, index):
-    students = request.session.get('students', [])
-    if request.method == 'POST':
-        students[index]['name'] = request.POST['name']
-        students[index]['email'] = request.POST['email']
-        students[index]['course'] = request.POST['course']
-        request.session['students'] = students
+        Student.objects.create(
+            name=request.POST['name'],
+            email=request.POST['email'],
+            course=request.POST['course'],
+            status=request.POST['status']
+        )
         return redirect('admin_students')
 
-    return render(request, 'adminpanel/edit_student.html', {
-        'student': students[index],
-        'index': index
-    })
+    return render(request, 'adminpanel/add_student.html')
+def edit_student(request, id):
+    student = get_object_or_404(Student, id=id)
 
+    if request.method == 'POST':
+        student.name = request.POST['name']
+        student.email = request.POST['email']
+        student.course = request.POST['course']
+        student.status = request.POST['status']
+        student.save()
+        return redirect('admin_students')
 
-def toggle_status(request, index):
-    students = request.session.get('students', [])
-    if students[index]['status'] == 'Active':
-        students[index]['status'] = 'Inactive'
-    else:
-        students[index]['status'] = 'Active'
-    request.session['students'] = students
+    return render(request, 'adminpanel/edit_student.html', {'student': student})
+def delete_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    student.delete()
     return redirect('admin_students')
 
 def admin_instructors(request):

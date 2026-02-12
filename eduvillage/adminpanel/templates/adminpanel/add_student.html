@@ -1,48 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Student</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f9;
-        }
-        .box {
-            width: 400px;
-            margin: 60px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
+{% extends 'adminpanel/base.html' %}
+{% block content %}
+<h3>Add Student</h3>
 
-<div class="box">
-    <h2>Add Student</h2>
+<form method="POST">
+{% csrf_token %}
+<input name="name" class="form-control mb-2" placeholder="Name">
+<input name="email" class="form-control mb-2" placeholder="Email">
+<input name="course" class="form-control mb-2" placeholder="Course">
 
-    <input type="text" placeholder="Student Name">
-    <input type="email" placeholder="Email">
-    <input type="text" placeholder="Course">
+<select name="status" class="form-control mb-3">
+  <option>Active</option>
+  <option>Inactive</option>
+</select>
 
-    <button>Add Student</button>
-
-    <p style="color:gray; margin-top:10px;">
-
-    </p>
-</div>
-
-</body>
-</html>
+<button class="btn btn-success">Save</button>
+</form>
+{% endblock %}
