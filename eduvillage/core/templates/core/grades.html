@@ -1,0 +1,36 @@
+{% extends "core/dashboard_student.html" %}
+
+{% block content %}
+
+<h2>📊 My Grades</h2>
+
+<div class="grades-container">
+
+{% for g in grades %}
+<div class="grade-card">
+    <h3>{{ g.course.title }}</h3>
+    <p>Grade: <strong>{{ g.grade }}</strong></p>
+</div>
+
+{% empty %}
+<p>No grades available.</p>
+{% endfor %}
+
+</div>
+
+<style>
+.grades-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.grade-card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 6px 12px rgba(0,0,0,.08);
+}
+</style>
+
+{% endblock %}

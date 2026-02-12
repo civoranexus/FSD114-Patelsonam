@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="courses-container">
+
+    <h1 class="page-title">Our Courses</h1>
+    <p class="page-subtitle">
+        Explore industry-relevant courses designed to boost your skills and career.
+    </p>
+
+   <div class="row">
+  {% for course in courses %}
+  <div class="col-md-4 mb-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ course.title }}</h5>
+        <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+
+        <ul class="list-unstyled small">
+          <li>⏱ Duration: {{ course.duration }}</li>
+          <li>🎯 Level: {{ course.level }}</li>
+        </ul>
+
+        <!-- IMPORTANT CHANGE -->
+        <a href="{% url 'course_detail' course.id %}"
+           class="btn btn-primary w-100">
+          View Details
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+      </div>
+    </div>
+    </div>   <!-- ✅ closes row -->
+</div>   <!-- ✅ closes courses-container -->
+
+
+<!-- Enroll Confirmation Modal -->
+<div class="modal fade" id="enrollModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Course Enrollment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p>✅ You have successfully enrolled in this course.</p>
+        <p class="text-muted small">
+          Start learning from your dashboard.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <a href="{% url 'dashboard' %}" class="btn btn-primary">
+          Go to Dashboard
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

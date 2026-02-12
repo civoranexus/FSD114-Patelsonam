@@ -1,0 +1,48 @@
+{% extends "core/base_instructor.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h3 class="mb-4">Student Attendance</h3>
+
+<!-- Course Selection -->
+<div class="mb-3">
+<label>Select Course</label>
+<select class="form-select">
+{% for c in courses %}
+<option>{{ c }}</option>
+{% endfor %}
+</select>
+</div>
+
+<!-- Attendance Table -->
+<table class="table table-bordered shadow-sm">
+
+<thead class="table-light">
+<tr>
+<th>Roll No</th>
+<th>Student Name</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+{% for s in students %}
+<tr>
+<td>{{ s.roll }}</td>
+<td>{{ s.name }}</td>
+<td>
+<input type="checkbox"> Present
+</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</table>
+
+<button class="btn btn-primary mt-3">Save Attendance</button>
+
+</div>
+
+{% endblock %}

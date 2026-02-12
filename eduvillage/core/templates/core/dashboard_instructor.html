@@ -1,0 +1,287 @@
+{% extends 'core/base_instructor.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+
+body{
+    background:#b4eed4;
+}
+
+/* Dashboard Cards */
+
+.dashboard-card{
+    height:170px;
+    border-radius:15px;
+    background:rgba(166, 197, 240, 0.985);
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    transition:.3s ease;
+}
+
+.course-card{
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+/* Glow hover */
+
+.glow-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 0 25px rgb(27, 119, 47);
+}
+
+/* Numbers */
+
+.card-text{
+    font-size:26px;
+    font-weight:700;
+    color:#020b18;
+}
+
+/* Buttons */
+
+.glow-btn{
+    background:linear-gradient(45deg,#4b85dd76,#b190e7d5);
+    color:rgb(6, 14, 47);
+    border:none;
+    border-radius:25px;
+    padding:6px 18px;
+    box-shadow:0 0 12px rgba(224, 226, 229, 0.756);
+}
+
+.glow-btn:hover{
+    box-shadow:0 0 25px rgb(3, 254, 150);
+    color:rgb(9, 5, 30);
+}
+
+/* Blink Button */
+
+.blink-btn{
+    background:#dc3545;
+    color:rgba(208, 34, 34, 0.804);
+    border-radius:25px;
+    animation:blink 1.4s infinite;
+}
+
+@keyframes blink{
+    0%{box-shadow:0 0 5px red;}
+    50%{box-shadow:0 0 20px red;}
+    100%{box-shadow:0 0 5px red;}
+}
+
+/* Quick Action Buttons */
+
+.action-btn{
+    padding:14px;
+    font-weight:600;
+}
+
+/* Calendar polish */
+
+#calendar{
+    margin-top:20px;
+    background:rgb(187, 251, 232);
+    padding:15px;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+/* Sidebar */
+
+.list-group-item.active{
+    background:linear-gradient(45deg,#011d48,#6610f2);
+    border:none;
+}
+body {
+  background: #f8fafc;
+}
+
+.sidebar {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0ea5a4, #22c55e);
+  padding-top: 20px;
+}
+
+.sidebar .list-group-item {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-weight: 500;
+}
+
+.sidebar .list-group-item:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.sidebar .list-group-item.active {
+  background: linear-gradient(45deg, #011d48, #6610f2);
+  color: #fff;
+}
+
+
+</style>
+<div class="dashboard-header mb-4">
+  <h2>
+    Hello {{ user.first_name|default:user.username }} 👋
+  </h2>
+  <p>Welcome back, {{ profile.role|capfirst }}!</p>
+</div>
+
+<div class="profile-card mb-4 p-3 shadow bg-light rounded">
+    <h4>Whats New, {{ user.first_name|default:user.username }} </h4>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Joined:</strong> {{ user.date_joined|date:"d M Y" }}</p>
+    
+    <hr>
+    
+</div>
+
+<div class="container-fluid mt-4">
+
+  <!-- Summary Cards -->
+  <div class="row mb-4 g-3">
+    <div class="col-md-3">
+      <div class="card dashboard-card glow-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Courses</h5>
+          <p class="card-text">{{ total_courses }}</p>
+          <a href="{% url 'instructor_my_courses' %}" class="btn btn-sm glow-btn">View Courses</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card dashboard-card glow-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Students</h5>
+          <p class="card-text">{{ total_students }}</p>
+          <a href="{% url 'student_attendance' %}" class="btn btn-sm glow-btn">View Students</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card dashboard-card glow-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Pending Assignments</h5>
+          <p class="card-text">{{ pending_assignments }}</p>
+          <a href="{% url 'assignments' %}" class="btn btn-sm glow-btn">View Tasks</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card dashboard-card glow-card text-center">
+        <div class="card-body">
+          <h5 class="card-title">Notifications</h5>
+          <p class="card-text">{{ notifications_count }}</p>
+          <a href="{% url 'notifications' %}" class="btn btn-sm blink-btn">Check Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <!-- Quick Actions -->
+<h5 class="mb-3">Quick Actions</h5>
+
+<div class="row mb-4 g-3">
+
+<div class="col-md-3">
+<a href="{% url 'assignments' %}" class="btn action-btn glow-btn w-100">
+Add Assignment
+</a>
+</div>
+
+<div class="col-md-3">
+<a href="{% url 'instructor_calendar' %}" class="btn action-btn glow-btn w-100">
+Schedule Class
+</a>
+</div>
+
+<div class="col-md-3">
+<a href="{% url 'notifications' %}" class="btn action-btn glow-btn w-100">
+Send Announcement
+</a>
+</div>
+
+<div class="col-md-3">
+<a href="{% url 'student_attendance' %}" class="btn action-btn glow-btn w-100">
+Mark Attendance
+</a>
+</div>
+
+</div>
+
+  </div>
+<h4>My Courses</h4>
+<div class="row g-3 mb-4">
+    {% for course in courses_list %}
+    <div class="col-md-4">
+        <div class="card course-card p-3 glow-card text-center">
+            <h5>{{ course.name }}</h5>
+            <p>Students Enrolled: {{ course.student_count }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+  <!-- Calendar Section -->
+
+  <div class="card shadow p-3 mt-3">
+
+<h5 class="mb-3">Upcoming Classes & Deadlines</h5>
+
+{% if events %}
+
+<ul class="list-group">
+
+{% for event in events %}
+
+<li class="list-group-item d-flex justify-content-between">
+
+<span>{{ event.title }}</span>
+
+<small>{{ event.start_date }}</small>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+{% else %}
+
+<p>No upcoming events.</p>
+
+{% endif %}
+
+</div>
+
+
+</div>
+
+<!-- FullCalendar JS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    height: 500,
+    events: [
+      {% for event in events %}
+      {
+        title: '{{ event.title|escapejs }}',
+        url: '{{ event.url|default:"#"}',
+        start: '{{ event.start_date }}',
+        end: '{{ event.end_date }}',
+        url: '{{ event.url }}'
+      },
+      {% endfor %}
+    ]
+  });
+  calendar.render();
+});
+</script>
+
+{% endblock %}

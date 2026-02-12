@@ -1,0 +1,113 @@
+/* ================= LOGIN PAGE ONLY ================= */
+
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f5f7fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+/* Login container */
+.auth-container {
+    background: #ffffff;
+    padding: 40px 30px;
+    width: 360px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Logo */
+.login-logo {
+    width: 120px;
+    margin-bottom: 20px;
+}
+
+/* Heading */
+.auth-container h2 {
+    margin-bottom: 8px;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+/* Inputs & selects */
+.auth-container input,
+.auth-container select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #fefefe;
+    color: #333;
+    font-size: 14px;
+}
+
+.auth-container input::placeholder {
+    color: #999;
+}
+
+/* Login button */
+.auth-container .btn-primary {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #6a5acd, #00bcd4);
+    color: #fff;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.auth-container .btn-primary:hover {
+    background: linear-gradient(90deg, #5a4dbf, #00a4b0);
+    transform: translateY(-2px);
+}
+
+/* Switch link */
+.switch-link {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 13px;
+    opacity: 0.7;
+}
+
+.switch-link a {
+    color: #6a5acd;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-link a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .auth-container {
+        width: 90%;
+        padding: 30px 20px;
+    }
+}

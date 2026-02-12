@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📘 Study Planner</title>
+    <link rel="stylesheet" href="{% static 'css/study_planner.css' %}">
+</head>
+<body>
+<div class="container">
+    <h2>📘 My Study Planner</h2>
+
+    <!-- Add Task Form -->
+    <div class="form-card">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="subject" placeholder="Subject" required>
+            <input type="text" name="topic" placeholder="Topic" required>
+            <input type="date" name="study_date" required>
+            <input type="number" name="duration" placeholder="Hours" required>
+            <button type="submit" class="btn submit-btn">Add Task</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- Planned Tasks -->
+    <h3>📅 Planned Tasks</h3>
+
+{% for day in planner %}
+  <h3>{{ day.date }}</h3>
+  <ul>
+    {% for task in day.tasks %}
+      {% if task.id %}
+        <li class="task-row">
+    <span class="task-text">
+        {{ task.subject }} - {{ task.duration }} hrs
+    </span>
+    <span class="task-actions">
+        <a href="{% url 'edit_task' task.id %}" class="edit">Edit</a>
+        <a href="{% url 'delete_task' task.id %}" class="delete">Delete</a>
+    </span>
+</li>
+
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% empty %}
+  <p>No tasks planned yet.</p>
+{% endfor %}
+
+
+    <a href="{% url 'dashboard_student' %}" class="back-btn">← Back to Dashboard</a>
+</div>
+</body>
+</html>

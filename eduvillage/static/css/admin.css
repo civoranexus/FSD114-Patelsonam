@@ -1,0 +1,12 @@
+.sidebar {
+    min-height: 100vh;
+}
+
+.sidebar a {
+    text-decoration: none;
+    padding: 8px 0;
+}
+
+.card {
+    border-radius: 12px;
+}

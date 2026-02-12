@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Signup</h2>
+
+    {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+    {% endfor %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        {% if form.errors %}
+            <div style="color:red;">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit">Create Account</button>
+    </form>
+
+
+    <p style="text-align:center; margin-top:10px;">
+        Already have an account?
+        <a href="{% url 'login' %}">Login</a>
+    </p>
+</div>
+
+</body>
+</html>

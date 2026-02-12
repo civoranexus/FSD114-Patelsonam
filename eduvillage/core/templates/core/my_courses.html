@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h3 class="mb-4">My Courses</h3>
+
+    {% if enrollments %}
+        <div class="row">
+            {% for enrollment in enrollments %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ enrollment.course.title }}
+                            </h5>
+
+                            <p class="card-text text-muted">
+                                {{ enrollment.course.description|truncatewords:20 }}
+                            </p>
+
+                            <p class="mb-1">
+                                <strong>Instructor:</strong>
+                                {{ enrollment.course.created_by.get_full_name }}
+                            </p>
+
+                            <a href="#" class="btn btn-sm btn-outline-primary mt-2">
+                                View Course
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            You are not enrolled in any courses yet.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+/* Page Wrapper */
+.timetable-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.timetable-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #0f5132;
+    font-weight: 700;
+}
+
+/* Table */
+.study-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Table Header */
+.study-table thead {
+    background: linear-gradient(135deg, #198754, #20c997);
+    color: white;
+}
+
+.study-table th,
+.study-table td {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 15px;
+}
+
+/* Table Rows */
+.study-table tbody tr {
+    border-bottom: 1px solid #eaeaea;
+}
+
+.study-table tbody tr:hover {
+    background: #f0fdf4;
+}
+
+/* Status Badge */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-complete {
+    background: #d1e7dd;
+    color: #0f5132;
+}
+
+.badge-pending {
+    background: #fff3cd;
+    color: #664d03;
+}
+</style>
+
+<div class="timetable-container">
+    <h2>📅 Weekly Study Timetable</h2>
+
+    <table class="study-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Subject</th>
+                <th>Topic</th>
+                <th>Hours</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- Fake Entries -->
+            <tr>
+                <td>05 Feb 2026</td>
+                <td>Python</td>
+                <td>Functions & Loops</td>
+                <td>2 hrs</td>
+                <td><span class="badge badge-complete">Completed</span></td>
+            </tr>
+
+            <tr>
+                <td>06 Feb 2026</td>
+                <td>Web Development</td>
+                <td>HTML Forms & CSS</td>
+                <td>1.5 hrs</td>
+                <td><span class="badge badge-complete">Completed</span></td>
+            </tr>
+
+            <tr>
+                <td>07 Feb 2026</td>
+                <td>Data Science</td>
+                <td>Pandas Basics</td>
+                <td>2 hrs</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+            </tr>
+
+            <tr>
+                <td>08 Feb 2026</td>
+                <td>Django</td>
+                <td>Views & URLs</td>
+                <td>2.5 hrs</td>
+                <td><span class="badge badge-pending">Pending</span></td>
+            </tr>
+
+            <tr>
+                <td>09 Feb 2026</td>
+                <td>AI & ML</td>
+                <td>Linear Regression</td>
+                <td>3 hrs</td>
+                <td><span class="badge badge-complete">Completed</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

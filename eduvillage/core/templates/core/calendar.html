@@ -1,0 +1,58 @@
+{% extends 'core/base_instructor.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+
+    <!-- Month navigation -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <a href="?month={{ prev_month.month }}&year={{ prev_month.year }}" class="btn btn-outline-primary">&laquo; Prev</a>
+        <h4>{{ month_year }}</h4>
+        <a href="?month={{ next_month.month }}&year={{ next_month.year }}" class="btn btn-outline-primary">Next &raquo;</a>
+    </div>
+
+    <!-- Calendar table -->
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+                <th>Sun</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for week in weeks %}
+            <tr>
+                {% for day in week %}
+                <td class="{% if not day.in_month %}bg-light text-muted{% endif %} {% if day.is_today %}border border-danger{% endif %}" style="height:100px; vertical-align:top;">
+                    <!-- Date -->
+                    <div><strong>{{ day.date.day }}</strong></div>
+
+                    <!-- Events -->
+                    <ul class="list-unstyled small mt-1">
+                        {% for event in day.events %}
+                        <li>
+                            {% if event.type == 'class' %}
+                                <span class="badge bg-primary">{{ event.title }}</span>
+                            {% elif event.type == 'assignment' %}
+                                <span class="badge bg-warning text-dark">{{ event.title }}</span>
+                            {% elif event.type == 'exam' %}
+                                <span class="badge bg-danger">{{ event.title }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">{{ event.title }}</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

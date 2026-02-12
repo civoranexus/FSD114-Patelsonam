@@ -1,0 +1,18 @@
+{% extends 'adminpanel/base.html' %}
+{% block content %}
+<h3>Edit Student</h3>
+
+<form method="POST">
+{% csrf_token %}
+<input name="name" value="{{ student.name }}" class="form-control mb-2">
+<input name="email" value="{{ student.email }}" class="form-control mb-2">
+<input name="course" value="{{ student.course }}" class="form-control mb-2">
+
+<select name="status" class="form-control mb-3">
+<option value="Active" {% if student.status == 'Active' %}selected{% endif %}>Active</option>
+<option value="Inactive" {% if student.status == 'Inactive' %}selected{% endif %}>Inactive</option>
+</select>
+
+<button class="btn btn-primary">Update</button>
+</form>
+{% endblock %}
